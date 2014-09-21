@@ -16,7 +16,7 @@ type Problem interface {
 	get_actions() int //to get the number of childeren b
 }
 
-type Strategy func(nodes []Node, children []Node)
+type Strategy func(nodes []Node, children []Node) []Node
 
 func general_search(p Problem, quing_fun Strategy) {
 
