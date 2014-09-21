@@ -15,4 +15,5 @@ func hello() {
 	fmt.Println(cap(a))
 	var n Node
 	fmt.Println(n == nil)
+	type Hey []int
 }

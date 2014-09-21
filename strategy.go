@@ -20,17 +20,6 @@ func depth_limited_search(limit int) Strategy {
 	}
 }
 
-type evaluation_func func(Node) int
-
-type ByEval struct {
-	nodes []Node
-	g     evaluation_func
-}
-
-func (a ByEval) Len() int           { return len(a.nodes) }
-func (a ByEval) Swap(i, j int)      { a.nodes[i], a.nodes[j] = a.nodes[j], a.nodes[i] }
-func (a ByEval) Less(i, j int) bool { return a.g(a.nodes[i]) < a.g(a.nodes[j]) }
-
 func greedy_search(h evaluation_func) Strategy {
 	return func(nodes []Node, children []Node) []Node {
 		combined := append(nodes, children...)
@@ -49,3 +38,14 @@ func a_star(h evaluation_func) Strategy {
 		return combined
 	}
 }
+
+type evaluation_func func(Node) int
+
+type ByEval struct {
+	nodes []Node
+	g     evaluation_func
+}
+
+func (a ByEval) Len() int           { return len(a.nodes) }
+func (a ByEval) Swap(i, j int)      { a.nodes[i], a.nodes[j] = a.nodes[j], a.nodes[i] }
+func (a ByEval) Less(i, j int) bool { return a.g(a.nodes[i]) < a.g(a.nodes[j]) }
