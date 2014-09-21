@@ -5,7 +5,6 @@ type Node interface {
 	get_operator() int
 	get_depth() int
 	get_path_cost() int
-	get_children() []Node
 }
 
 type Problem interface {
@@ -13,6 +12,7 @@ type Problem interface {
 	test_success(n Node) bool
 	do_action(x int) Node
 	get_action_cost(n Node, x int)
+	get_children(n Node) []Node
 	get_actions() int //to get the number of childeren b
 }
 
@@ -31,7 +31,7 @@ func general_search(p Problem, quing_fun Strategy) Node {
 			if p.test_success(node) {
 				return node
 			} else {
-				var children []Node = node.get_children()
+				var children []Node = p.get_children(node)
 				nodes = quing_fun(nodes, children)
 			}
 		}
