@@ -4,7 +4,7 @@ func bfs(nodes []Node, children []Node) []Node {
 	return append(nodes, children...)
 }
 
-func bfs(nodes []Node, children []Node) []Node {
+func dfs(nodes []Node, children []Node) []Node {
 	return append(children, nodes...)
 }
 
