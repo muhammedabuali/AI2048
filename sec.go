@@ -23,7 +23,8 @@ func hello() {
 		{2, 2, 2, 2},
 		{2, 0, 0, 0},
 		{2, 4, 0, 2}}
-	var node N2048 = N2048{board, 0}
+	var root *N2048
+	var node N2048 = N2048{board, 0, root, 0, 0, 0}
 	var node1 N2048 = make_node(node, 1)
 	var node2 N2048 = make_node(node, 2)
 	var node3 N2048 = make_node(node, 3)
@@ -46,5 +47,13 @@ func hello() {
 	fmt.Println("*******")
 	for i := 0; i < 4; i++ {
 		fmt.Println(node4.board[i])
+	}
+	var p Problem
+	p = &P2048{8}
+	var sol Node = general_search(p, dfs)
+	var solution = sol.(N2048)
+	fmt.Println("*******")
+	for i := 0; i < 4; i++ {
+		fmt.Println(solution.board[i])
 	}
 }

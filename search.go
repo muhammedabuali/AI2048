@@ -12,7 +12,6 @@ type Problem interface {
 	test_success(n Node) bool
 	get_action_cost(n Node, x int) int
 	expand(n Node) []Node
-	get_actions() int //to get the number of childeren b
 }
 
 type Strategy func(nodes []Node, children []Node) []Node
