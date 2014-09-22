@@ -26,9 +26,7 @@ func hello() {
 	var root *N2048
 	var node N2048 = N2048{board, 0, root, 0, 0, 0}
 	var node1 N2048 = make_node(node, 1)
-	var node2 N2048 = make_node(node, 2)
-	var node3 N2048 = make_node(node, 3)
-	var node4 N2048 = make_node(node, 4)
+	var node5 N2048 = make_node(node1, 1)
 	for i := 0; i < 4; i++ {
 		fmt.Println(node.board[i])
 	}
@@ -38,22 +36,22 @@ func hello() {
 	}
 	fmt.Println("*******")
 	for i := 0; i < 4; i++ {
-		fmt.Println(node2.board[i])
-	}
-	fmt.Println("*******")
-	for i := 0; i < 4; i++ {
-		fmt.Println(node3.board[i])
-	}
-	fmt.Println("*******")
-	for i := 0; i < 4; i++ {
-		fmt.Println(node4.board[i])
+		fmt.Println(node5.board[i])
 	}
 	var p Problem
 	p = &P2048{8}
-	var sol Node = general_search(p, dfs)
+	var sol Node = general_search(p, bfs)
 	var solution = sol.(N2048)
-	fmt.Println("*******")
+	var parent *N2048 = solution.parent
+	fmt.Println("***sol***")
 	for i := 0; i < 4; i++ {
 		fmt.Println(solution.board[i])
+	}
+	for parent != nil {
+		fmt.Println("***sol***")
+		for i := 0; i < 4; i++ {
+			fmt.Println(parent.board[i])
+		}
+		parent = parent.parent
 	}
 }

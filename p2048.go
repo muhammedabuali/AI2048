@@ -77,7 +77,7 @@ func make_node(n Node, direction int) N2048 {
 			}
 			shift = 0
 			//sum equal neighbours
-			for row := 0; row < 4; row++ {
+			for row := 0; row < 3; row++ {
 				if b[row][col] == 0 { //empty cell
 					break // no more cells
 				}
@@ -95,23 +95,28 @@ func make_node(n Node, direction int) N2048 {
 					b[row][col] = 0
 				}
 			}
+			if shift != 0 {
+				b[3+shift][col] = b[3][col]
+				b[3][col] = 0
+			}
 		}
 		//TODO: add 2 @ random position
 		// calculate max
 		var empty_cells []int
-		var maximum int
+		var maximum, count int
 		for i := 0; i < 4; i++ {
 			for j := 0; j < 4; j++ {
 				if b[i][j] == 0 {
 					temp := i*4 + j
 					empty_cells = append(empty_cells, temp)
+					count += 1
 				} else if b[i][j] > maximum {
 					maximum = b[i][j]
 				}
 			}
 		}
-		if len(empty_cells) != 0 {
-			pos := rand.Intn(len(empty_cells))
+		if count != 0 {
+			pos := rand.Intn(count)
 			pos = empty_cells[pos]
 			b[pos/4][pos%4] = 2
 		}
@@ -131,7 +136,7 @@ func make_node(n Node, direction int) N2048 {
 			}
 			shift = 0
 			//sum equal neighbours
-			for row := 3; row > -1; row-- {
+			for row := 3; row > 0; row-- {
 				if b[row][col] == 0 { //empty cell
 					break // no more cells
 				}
@@ -149,21 +154,26 @@ func make_node(n Node, direction int) N2048 {
 					b[row][col] = 0
 				}
 			}
+			if shift != 0 {
+				b[0+shift][col] = b[0][col]
+				b[0][col] = 0
+			}
 		}
 		var empty_cells []int
-		var maximum int
+		var maximum, count int
 		for i := 0; i < 4; i++ {
 			for j := 0; j < 4; j++ {
 				if b[i][j] == 0 {
 					temp := i*4 + j
 					empty_cells = append(empty_cells, temp)
+					count += 1
 				} else if b[i][j] > maximum {
 					maximum = b[i][j]
 				}
 			}
 		}
-		if len(empty_cells) != 0 {
-			pos := rand.Intn(len(empty_cells))
+		if count != 0 {
+			pos := rand.Intn(count)
 			pos = empty_cells[pos]
 			b[pos/4][pos%4] = 2
 		}
@@ -183,7 +193,7 @@ func make_node(n Node, direction int) N2048 {
 			}
 			shift = 0
 			//sum equal neighbours
-			for col := 0; col < 4; col++ {
+			for col := 0; col < 3; col++ {
 				if b[row][col] == 0 { //empty cell
 					break // no more cells
 				}
@@ -201,21 +211,26 @@ func make_node(n Node, direction int) N2048 {
 					b[row][col] = 0
 				}
 			}
+			if shift != 0 {
+				b[row][3+shift] = b[row][3]
+				b[row][3] = 0
+			}
 		}
 		var empty_cells []int
-		var maximum int
+		var maximum, count int
 		for i := 0; i < 4; i++ {
 			for j := 0; j < 4; j++ {
 				if b[i][j] == 0 {
 					temp := i*4 + j
 					empty_cells = append(empty_cells, temp)
+					count += 1
 				} else if b[i][j] > maximum {
 					maximum = b[i][j]
 				}
 			}
 		}
-		if len(empty_cells) != 0 {
-			pos := rand.Intn(len(empty_cells))
+		if count != 0 {
+			pos := rand.Intn(count)
 			pos = empty_cells[pos]
 			b[pos/4][pos%4] = 2
 		}
@@ -235,7 +250,7 @@ func make_node(n Node, direction int) N2048 {
 			}
 			shift = 0
 			//sum equal neighbours
-			for col := 3; col > -1; col-- {
+			for col := 3; col > 0; col-- {
 				if b[row][col] == 0 { //empty cell
 					break // no more cells
 				}
@@ -253,21 +268,26 @@ func make_node(n Node, direction int) N2048 {
 					b[row][col] = 0
 				}
 			}
+			if shift != 0 {
+				b[row][0+shift] = b[row][0]
+				b[row][0] = 0
+			}
 		}
 		var empty_cells []int
-		var maximum int
+		var maximum, count int
 		for i := 0; i < 4; i++ {
 			for j := 0; j < 4; j++ {
 				if b[i][j] == 0 {
 					temp := i*4 + j
 					empty_cells = append(empty_cells, temp)
+					count += 1
 				} else if b[i][j] > maximum {
 					maximum = b[i][j]
 				}
 			}
 		}
-		if len(empty_cells) != 0 {
-			pos := rand.Intn(len(empty_cells))
+		if count != 0 {
+			pos := rand.Intn(count)
 			pos = empty_cells[pos]
 			b[pos/4][pos%4] = 2
 		}
