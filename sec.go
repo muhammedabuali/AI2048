@@ -26,6 +26,8 @@ func hello() {
 	var node N2048 = N2048{board, 0}
 	var node1 N2048 = make_node(node, 1)
 	var node2 N2048 = make_node(node, 2)
+	var node3 N2048 = make_node(node, 3)
+	var node4 N2048 = make_node(node, 4)
 	for i := 0; i < 4; i++ {
 		fmt.Println(node.board[i])
 	}
@@ -36,5 +38,13 @@ func hello() {
 	fmt.Println("*******")
 	for i := 0; i < 4; i++ {
 		fmt.Println(node2.board[i])
+	}
+	fmt.Println("*******")
+	for i := 0; i < 4; i++ {
+		fmt.Println(node3.board[i])
+	}
+	fmt.Println("*******")
+	for i := 0; i < 4; i++ {
+		fmt.Println(node4.board[i])
 	}
 }

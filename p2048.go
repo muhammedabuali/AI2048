@@ -112,7 +112,74 @@ func make_node(node N2048, direction int) N2048 {
 			}
 		}
 		out = N2048{b, 0}
+	} else if direction == 3 { //left
+		for row := 0; row < 4; row++ {
+			shift = 0
+			//move over empty cells
+			for col := 0; col < 4; col++ {
+				if b[row][col] == 0 { //empty cell
+					shift -= 1
+				} else if shift != 0 {
+					b[row][col+shift] = b[row][col]
+					b[row][col] = 0
+				}
+			}
+			shift = 0
+			//sum equal neighbours
+			for col := 0; col < 4; col++ {
+				if b[row][col] == 0 { //empty cell
+					break // no more cells
+				}
+				if b[row][col] == b[row][col+1] {
+					b[row][col] *= 2
+					b[row][col+1] = 0
+					if shift != 0 {
+						b[row][col+shift] = b[row][col]
+						b[row][col] = 0
+					}
+					shift -= 1
+					col += 1
+				} else if shift != 0 {
+					b[row][col+shift] = b[row][col]
+					b[row][col] = 0
+				}
+			}
+		}
+		out = N2048{b, 0}
+	} else if direction == 4 { //right
+		for row := 0; row < 4; row++ {
+			shift = 0
+			//move over empty cells
+			for col := 3; col > -1; col-- {
+				if b[row][col] == 0 { //empty cell
+					shift += 1
+				} else if shift != 0 {
+					b[row][col+shift] = b[row][col]
+					b[row][col] = 0
+				}
+			}
+			shift = 0
+			//sum equal neighbours
+			for col := 3; col > -1; col-- {
+				if b[row][col] == 0 { //empty cell
+					break // no more cells
+				}
+				if b[row][col] == b[row][col-1] {
+					b[row][col] *= 2
+					b[row][col-1] = 0
+					if shift != 0 {
+						b[row][col+shift] = b[row][col]
+						b[row][col] = 0
+					}
+					shift += 1
+					col -= 1
+				} else if shift != 0 {
+					b[row][col+shift] = b[row][col]
+					b[row][col] = 0
+				}
+			}
+		}
+		out = N2048{b, 0}
 	}
-
 	return out
 }
