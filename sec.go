@@ -23,8 +23,13 @@ func hello() {
 		{2, 2, 2, 2},
 		{2, 0, 0, 0},
 		{2, 4, 0, 2}}
-	var node1 N2048 = N2048{board, 0}
-	var node2 N2048 = make_node(node1, 1)
+	var node N2048 = N2048{board, 0}
+	var node1 N2048 = make_node(node, 1)
+	var node2 N2048 = make_node(node, 2)
+	for i := 0; i < 4; i++ {
+		fmt.Println(node.board[i])
+	}
+	fmt.Println("*******")
 	for i := 0; i < 4; i++ {
 		fmt.Println(node1.board[i])
 	}
