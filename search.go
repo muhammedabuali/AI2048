@@ -1,37 +1,41 @@
-package main
+package AI2048
 
-type Node interface {
-	get_parent() Node
-	get_operator() int
-	get_depth() int
-	get_path_cost() int
-}
+import (
+	"math"
+)
 
-type Problem interface {
-	init_state() Node
-	test_success(n Node) bool
-	get_action_cost(n Node, x int) int
-	expand(n Node) []Node
-}
-
-type Strategy func(nodes []Node, children []Node) []Node
-
-func general_search(p Problem, quing_fun Strategy) Node {
-	var nodes []Node
-	var output Node
-	nodes = append(nodes, p.init_state())
+func general_search(p Problem, quing_fun Strategy) (Node, bool, uint64) {
+	nodes := make([]Node, 0, 10)             // Make a queue
+	nodes = append(nodes, p.initial_state()) // queue initial state
+	expanded_nodes := uint64(0)
 	for {
 		if len(nodes) == 0 {
-			return output
+			return nil, false, expanded_nodes
 		} else {
+			// Remove first node
 			node := nodes[0]
 			nodes = nodes[1:]
-			if p.test_success(node) {
-				return node
+			if p.goal_test(node) {
+				return node, true, expanded_nodes
 			} else {
-				var children []Node = p.expand(node)
-				nodes = quing_fun(nodes, children)
+				expanded_nodes++
+				nodes = quing_fun(nodes, p.expand(node))
 			}
 		}
 	}
+}
+
+func iterative_deepening_search(p Problem) (Node, bool, uint64) {
+
+	total_expanded_nodes := uint64(0)
+	for limit := uint64(0); limit < math.MaxUint64; limit++ {
+		quing_fun := depth_limited_search(limit)
+		target, success, expanded_nodes := general_search(p, quing_fun)
+		if success {
+			return target, success, expanded_nodes
+		}
+		total_expanded_nodes += uint64(expanded_nodes)
+	}
+
+	return nil, false, total_expanded_nodes
 }

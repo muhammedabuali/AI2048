@@ -1,18 +1,18 @@
-package main
+package AI2048
 
 import "sort"
 
-func bfs(nodes []Node, children []Node) []Node {
+func enqueue_at_end(nodes []Node, children []Node) []Node {
 	return append(nodes, children...)
 }
 
-func dfs(nodes []Node, children []Node) []Node {
+func enqueue_at_front(nodes []Node, children []Node) []Node {
 	return append(children, nodes...)
 }
 
-func depth_limited_search(limit int) Strategy {
+func depth_limited_search(limit uint64) Strategy {
 	return func(nodes []Node, children []Node) []Node {
-		if children[0].get_depth() > limit {
+		if uint64(children[0].get_depth()) > limit {
 			return nodes
 		} else {
 			return append(children, nodes...)
@@ -20,7 +20,7 @@ func depth_limited_search(limit int) Strategy {
 	}
 }
 
-func greedy_search(h evaluation_func) Strategy {
+func greedy_enqueue(h heuristic) Strategy {
 	return func(nodes []Node, children []Node) []Node {
 		combined := append(nodes, children...)
 		sort.Sort(ByEval{combined, h})
@@ -28,7 +28,7 @@ func greedy_search(h evaluation_func) Strategy {
 	}
 }
 
-func a_star(h evaluation_func) Strategy {
+func a_star_enqueue(h heuristic) Strategy {
 	return func(nodes []Node, children []Node) []Node {
 		combined := append(nodes, children...)
 		eval := func(n Node) int {
@@ -39,11 +39,9 @@ func a_star(h evaluation_func) Strategy {
 	}
 }
 
-type evaluation_func func(Node) int
-
 type ByEval struct {
 	nodes []Node
-	g     evaluation_func
+	g     heuristic
 }
 
 func (a ByEval) Len() int           { return len(a.nodes) }

@@ -2,6 +2,7 @@
 *.o
 *.a
 *.so
+AI2048
 
 # Folders
 _obj
