@@ -31,10 +31,11 @@ func iterative_deepening_search(p Problem) (Node, bool, uint64) {
 	for limit := uint64(0); limit < math.MaxUint64; limit++ {
 		quing_fun := depth_limited_search(limit)
 		target, success, expanded_nodes := general_search(p, quing_fun)
-		if success {
-			return target, success, expanded_nodes
-		}
 		total_expanded_nodes += uint64(expanded_nodes)
+		if success {
+			return target, success, total_expanded_nodes
+		}
+
 	}
 
 	return nil, false, total_expanded_nodes
