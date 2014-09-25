@@ -3,12 +3,12 @@ package AI2048
 type Grid [4][4]int
 
 type N2048 struct {
-	board     Grid
+	board     Grid   // The grid
 	max       int    // maximum value in board
 	parent    *N2048 // nil if root
-	operator  int
-	path_cost int
-	depth     int
+	operator  int    // operator applied on parent to reach this node
+	path_cost int    // cost from initial state to here
+	depth     int    // distance from initial state
 }
 
 func (node *N2048) get_parent() Node {
@@ -28,7 +28,7 @@ func (node *N2048) get_depth() int {
 }
 
 func (node *N2048) get_path() Path {
-	path := make(Path, node.path_cost)
+	path := make(Path, node.depth)
 	curr_node := node
 	translation_map := make(map[int]string)
 	translation_map[LEFT] = "left"
@@ -40,7 +40,5 @@ func (node *N2048) get_path() Path {
 		path[i] = translation_map[curr_node.operator]
 		curr_node = curr_node.parent
 	}
-
 	return path
-
 }

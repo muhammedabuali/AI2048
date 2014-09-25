@@ -1,7 +1,5 @@
 package AI2048
 
-import "math/rand"
-
 type P2048 struct {
 	goal int
 	grid *Grid
@@ -51,7 +49,7 @@ func make_node(n Node, direction int) *N2048 {
 	var shift int
 	var out *N2048
 
-	if direction == 1 {
+	if direction == UP {
 		for col := 0; col < 4; col++ {
 			shift = 0
 			//move over empty cells
@@ -88,29 +86,13 @@ func make_node(n Node, direction int) *N2048 {
 				b[3][col] = 0
 			}
 		}
-		//TODO: add 2 @ random position
+
 		// calculate max
-		var empty_cells []int
-		var maximum, count int
-		for i := 0; i < 4; i++ {
-			for j := 0; j < 4; j++ {
-				if b[i][j] == 0 {
-					temp := i*4 + j
-					empty_cells = append(empty_cells, temp)
-					count += 1
-				} else if b[i][j] > maximum {
-					maximum = b[i][j]
-				}
-			}
-		}
-		if count != 0 {
-			pos := rand.Intn(count)
-			pos = empty_cells[pos]
-			b[pos/4][pos%4] = 2
-		}
+		maximum := max_of_grid(&b)
+		add_tile(&b)
 		out = &N2048{b, maximum, node, 1, node.path_cost + 1,
 			node.depth + 1}
-	} else if direction == 2 {
+	} else if direction == DOWN {
 		for col := 0; col < 4; col++ {
 			shift = 0
 			//move over empty cells
@@ -147,27 +129,11 @@ func make_node(n Node, direction int) *N2048 {
 				b[0][col] = 0
 			}
 		}
-		var empty_cells []int
-		var maximum, count int
-		for i := 0; i < 4; i++ {
-			for j := 0; j < 4; j++ {
-				if b[i][j] == 0 {
-					temp := i*4 + j
-					empty_cells = append(empty_cells, temp)
-					count += 1
-				} else if b[i][j] > maximum {
-					maximum = b[i][j]
-				}
-			}
-		}
-		if count != 0 {
-			pos := rand.Intn(count)
-			pos = empty_cells[pos]
-			b[pos/4][pos%4] = 2
-		}
+		maximum := max_of_grid(&b)
+		add_tile(&b)
 		out = &N2048{b, maximum, node, 1, node.path_cost + 1,
 			node.depth + 1}
-	} else if direction == 3 { //left
+	} else if direction == LEFT { //left
 		for row := 0; row < 4; row++ {
 			shift = 0
 			//move over empty cells
@@ -204,27 +170,11 @@ func make_node(n Node, direction int) *N2048 {
 				b[row][3] = 0
 			}
 		}
-		var empty_cells []int
-		var maximum, count int
-		for i := 0; i < 4; i++ {
-			for j := 0; j < 4; j++ {
-				if b[i][j] == 0 {
-					temp := i*4 + j
-					empty_cells = append(empty_cells, temp)
-					count += 1
-				} else if b[i][j] > maximum {
-					maximum = b[i][j]
-				}
-			}
-		}
-		if count != 0 {
-			pos := rand.Intn(count)
-			pos = empty_cells[pos]
-			b[pos/4][pos%4] = 2
-		}
+		maximum := max_of_grid(&b)
+		add_tile(&b)
 		out = &N2048{b, maximum, node, 1, node.path_cost + 1,
 			node.depth + 1}
-	} else if direction == 4 { //right
+	} else if direction == RIGHT {
 		for row := 0; row < 4; row++ {
 			shift = 0
 			//move over empty cells
@@ -261,24 +211,8 @@ func make_node(n Node, direction int) *N2048 {
 				b[row][0] = 0
 			}
 		}
-		var empty_cells []int
-		var maximum, count int
-		for i := 0; i < 4; i++ {
-			for j := 0; j < 4; j++ {
-				if b[i][j] == 0 {
-					temp := i*4 + j
-					empty_cells = append(empty_cells, temp)
-					count += 1
-				} else if b[i][j] > maximum {
-					maximum = b[i][j]
-				}
-			}
-		}
-		if count != 0 {
-			pos := rand.Intn(count)
-			pos = empty_cells[pos]
-			b[pos/4][pos%4] = 2
-		}
+		maximum := max_of_grid(&b)
+		add_tile(&b)
 		out = &N2048{b, maximum, node, 1, node.path_cost + 1,
 			node.depth + 1}
 	}
@@ -287,7 +221,10 @@ func make_node(n Node, direction int) *N2048 {
 
 // adds a 2 at the first free corner if there is one
 func add_tile(g *Grid) {
-
+	r, c, ok := first_empty_corner(g)
+	if ok {
+		g[r][c] = 2
+	}
 }
 
 // Returns 3-tuple (r, c, ok) where r is row number c is column number
@@ -305,4 +242,17 @@ func first_empty_corner(g *Grid) (r, c int, ok bool) {
 	} else {
 		return -1, -1, false
 	}
+}
+
+// Returns the max value in a grid.
+func max_of_grid(g *Grid) int {
+	max := 0
+	for i := 0; i < 4; i++ {
+		for j := 0; j < 4; j++ {
+			if g[i][j] > max {
+				max = g[i][j]
+			}
+		}
+	}
+	return max
 }
