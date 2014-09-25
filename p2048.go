@@ -50,6 +50,7 @@ func make_node(n Node, direction int) *N2048 {
 	b := node.board
 	var shift int
 	var out *N2048
+
 	if direction == 1 {
 		for col := 0; col < 4; col++ {
 			shift = 0
@@ -284,13 +285,14 @@ func make_node(n Node, direction int) *N2048 {
 	return out
 }
 
-func add_tile(g *Grid, value int) {
+// adds a 2 at the first free corner if there is one
+func add_tile(g *Grid) {
 
 }
 
 // Returns 3-tuple (r, c, ok) where r is row number c is column number
 // and ok is true if there is an empty corner
-// Corner order : Tope-left and then clock-wise
+// Corner order : Top-left and then clock-wise
 func first_empty_corner(g *Grid) (r, c int, ok bool) {
 	if g[0][0] == 0 {
 		return 0, 0, true
