@@ -20,7 +20,7 @@ func depth_limited_search(limit uint64) Strategy {
 	}
 }
 
-func greedy_enqueue(h heuristic) Strategy {
+func greedy_enqueue(h Heuristic) Strategy {
 	return func(nodes []Node, children []Node) []Node {
 		combined := append(nodes, children...)
 		sort.Sort(ByEval{combined, h})
@@ -28,7 +28,7 @@ func greedy_enqueue(h heuristic) Strategy {
 	}
 }
 
-func a_star_enqueue(h heuristic) Strategy {
+func a_star_enqueue(h Heuristic) Strategy {
 	return func(nodes []Node, children []Node) []Node {
 		combined := append(nodes, children...)
 		eval := func(n Node) int {
@@ -41,7 +41,7 @@ func a_star_enqueue(h heuristic) Strategy {
 
 type ByEval struct {
 	nodes []Node
-	g     heuristic
+	g     Heuristic
 }
 
 func (a ByEval) Len() int           { return len(a.nodes) }

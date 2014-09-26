@@ -30,10 +30,9 @@ type Path []string
 type Problem interface {
 	initial_state() Node
 	goal_test(n Node) bool
-	get_action_cost(n Node, x int) int
 	expand(n Node) []Node
 }
 
 type Strategy func(nodes []Node, children []Node) []Node
 
-type heuristic func(Node) int
+type Heuristic func(Node) int

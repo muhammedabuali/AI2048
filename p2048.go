@@ -17,19 +17,23 @@ func (p *P2048) goal_test(n Node) bool {
 	return p.goal == n.(*N2048).max
 }
 
-// All actions have a cost of one.
-func (*P2048) get_action_cost(node Node, x int) int {
-	return 1
-}
-
 // Returns all children of a Node
 func (*P2048) expand(node Node) []Node {
 	nodes := make([]Node, 0, 4)
-	// Branching factor is four (four operators)
-	for i := 1; i <= 4; i++ {
-		node := make_node(node.(*N2048), i)
-		nodes = append(nodes, node)
+	// Apply all possible operators
+	if node.can_apply(LEFT) {
+		nodes = append(nodes, node.apply(LEFT))
 	}
+	if node.can_apply(RIGHT) {
+		nodes = append(nodes, node.apply(RIGHT))
+	}
+	if node.can_apply(DOWN) {
+		nodes = append(nodes, node.apply(DOWN))
+	}
+	if node.can_apply(UP) {
+		nodes = append(nodes, node.apply(UP))
+	}
+
 	return nodes
 }
 
@@ -217,34 +221,4 @@ func add_tile(g *Grid) {
 	if ok {
 		g[r][c] = 2
 	}
-}
-
-// Returns 3-tuple (r, c, ok) where r is row number c is column number
-// and ok is true if there is an empty corner
-// Corner order : Top-left and then clock-wise
-func first_empty_corner(g *Grid) (r, c int, ok bool) {
-	if g[0][0] == 0 {
-		return 0, 0, true
-	} else if g[0][3] == 0 {
-		return 0, 3, true
-	} else if g[3][3] == 0 {
-		return 3, 3, true
-	} else if g[3][0] == 0 {
-		return 3, 0, true
-	} else {
-		return -1, -1, false
-	}
-}
-
-// Returns the max value in a grid.
-func max_of_grid(g *Grid) int {
-	max := 0
-	for i := 0; i < 4; i++ {
-		for j := 0; j < 4; j++ {
-			if g[i][j] > max {
-				max = g[i][j]
-			}
-		}
-	}
-	return max
 }
