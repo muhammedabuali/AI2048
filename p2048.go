@@ -5,14 +5,6 @@ type P2048 struct {
 	grid *Grid
 }
 
-const (
-	LEFT  = iota
-	RIGHT = iota
-	UP    = iota
-	DOWN  = iota
-	START = iota
-)
-
 // Returns the initial state of the board
 // As in the Root node of the search tree.
 // seed is the seed used by the PRNG.
