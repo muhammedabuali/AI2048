@@ -1,4 +1,4 @@
-package AI2048
+package main
 
 type P2048 struct {
 	goal int

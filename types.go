@@ -1,4 +1,4 @@
-package AI2048
+package main
 
 // Operator/Direction constants
 const (

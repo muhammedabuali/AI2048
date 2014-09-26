@@ -1,4 +1,4 @@
-package AI2048
+package main
 
 import "sort"
 

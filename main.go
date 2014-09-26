@@ -1,6 +1,7 @@
-package AI2048
+package main
 
 import (
+	"fmt"
 	"math/rand"
 	"time"
 )
@@ -18,7 +19,9 @@ const (
 func main() {
 	// Generate grid
 	grid := GenGrid()
-	goal_path, path_cost, nodes_expanded := Search(&grid, 4, GR1, true)
+	goal_path, path_cost, nodes_expanded := Search(&grid, 4, BF, true)
+	fmt.Printf("Path: %v\nCost: %v\nTotal Nodes Expanded in search: %v",
+		goal_path, path_cost, nodes_expanded)
 }
 
 func Search(grid *Grid, M int, strategy int, visualize bool) (p Path, cost int, nodes uint64) {
@@ -62,14 +65,14 @@ func get_quing_func(symbol int) Strategy {
 	case DF:
 		return enqueue_at_front
 	case GR1:
-		return greedy_enqueue()
+		return greedy_enqueue(greedy_heuristic_1)
 	case GR2:
-		return greedy_enqueue()
+		return greedy_enqueue(greedy_heuristic_2)
 	case AS1:
-		return a_star_enqueue()
+		return a_star_enqueue(astar_heuristic_1)
 	default:
 		// AS2
-		return a_star_enqueue()
+		return a_star_enqueue(astar_heuristic_2)
 	}
 }
 

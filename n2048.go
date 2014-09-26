@@ -1,4 +1,4 @@
-package AI2048
+package main
 
 import (
 	"fmt"
@@ -62,7 +62,7 @@ func (this *N2048) can_apply(operator int) bool {
 		return false
 	default:
 		panic(fmt.Sprintf(
-			"unknown argument passed '%v' to can_apply on N2048:\n%v  ",
+			"unknown argument passed '%v' to can_apply on N2048:\n%v",
 			operator, this))
 	}
 }
@@ -74,12 +74,12 @@ func (this *N2048) can_apply_helper(dr, dc int) bool {
 
 	for row := 0; row < 4; row++ {
 		next_row := row + dr
-		if next_row < 0 || next_row > 4 {
+		if next_row < 0 || next_row > 3 {
 			continue
 		}
 		for column := 0; column < 4; column++ {
 			next_column := column + dc
-			if next_column < 0 || next_column > 4 {
+			if next_column < 0 || next_column > 3 {
 				continue
 			}
 			current_value := this.board[row][column]
