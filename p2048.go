@@ -214,11 +214,3 @@ func make_node(n Node, direction int) *N2048 {
 	}
 	return out
 }
-
-// adds a 2 at the first free corner if there is one
-func add_tile(g *Grid) {
-	r, c, ok := first_empty_corner(g)
-	if ok {
-		g[r][c] = 2
-	}
-}

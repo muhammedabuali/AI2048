@@ -103,7 +103,17 @@ func (this *N2048) apply(operator int) Node {
 	child := &N2048{this.board, this.max, this, operator,
 		this.path_cost, this.depth + 1}
 
+	child.max = max_of_grid(&child.board)
+	add_tile(&child.board)
 	return child
+}
+
+// adds a 2 at the first free corner if there is one
+func add_tile(g *Grid) {
+	r, c, ok := first_empty_corner(g)
+	if ok {
+		g[r][c] = 2
+	}
 }
 
 // Returns 3-tuple (r, c, ok) where r is row number c is column number
