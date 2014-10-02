@@ -213,16 +213,3 @@ func first_empty_corner(g *Grid) (r, c int, ok bool) {
 		return -1, -1, false
 	}
 }
-
-// Returns the max value in a grid.
-func max_of_grid(g *Grid) int {
-	max := 0
-	for i := 0; i < 4; i++ {
-		for j := 0; j < 4; j++ {
-			if g[i][j] > max {
-				max = g[i][j]
-			}
-		}
-	}
-	return max
-}
