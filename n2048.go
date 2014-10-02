@@ -103,6 +103,9 @@ func (this *N2048) inc_cost(value int) {
 }
 
 func stack_inserter(s Stack, value int) int {
+	if value == 0 {
+		return 0
+	}
 	sum := 0
 	if (!s.empty()) && (value == s.peak()) {
 		value = value * 2
@@ -130,7 +133,7 @@ func (this *N2048) apply(operator int) Node {
 }
 
 // Move tiles along vertical axis
-// +ve dc for down -ve for up
+// +ve dr for down -ve for up
 func (this *N2048) apply_helper_vert(row_start, row_end, dr, operator int) Node {
 	child := &N2048{Grid{}, this.max, this, operator,
 		this.path_cost, this.depth + 1}

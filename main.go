@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"time"
 )
 
 const (
@@ -78,7 +77,8 @@ func get_quing_func(symbol int) Strategy {
 
 func GenGrid() Grid {
 	grid := Grid{}
-	rand.Seed(time.Now().UTC().Unix())
+	//rand.Seed(time.Now().UTC().Unix())
+	rand.Seed(42)
 	r1, c1, r2, c2 := rand.Intn(4), rand.Intn(4), rand.Intn(4), rand.Intn(4)
 
 	for (r1 == r2) && (c2 == c1) {
