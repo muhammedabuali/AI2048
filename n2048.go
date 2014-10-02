@@ -102,18 +102,22 @@ func (this *N2048) inc_cost(value int) {
 	this.path_cost += value
 }
 
-func stack_inserter(s Stack, value int) int {
+func stack_inserter(s Stack, value int, can_merge bool) (int, bool) {
 	if value == 0 {
-		return 0
+		return 0, can_merge
 	}
 	sum := 0
-	if (!s.empty()) && (value == s.peak()) {
+	if !can_merge {
+		can_merge = true
+	} else if (!s.empty()) && (value == s.peak()) {
+
 		value = value * 2
 		sum = value
 		s.pop()
+		can_merge = false
 	}
 	s.push(value)
-	return sum
+	return sum, can_merge
 }
 
 func (this *N2048) apply(operator int) Node {
@@ -138,9 +142,11 @@ func (this *N2048) apply_helper_vert(row_start, row_end, dr, operator int) Node 
 	child := &N2048{Grid{}, this.max, this, operator,
 		this.path_cost, this.depth + 1}
 	stack := make_stack(4)
+	value := 0
+	can_merge := true
 	for column := 0; column != 4; column++ {
 		for row := row_start; row != row_end; row += dr {
-			value := stack_inserter(stack, this.board[row][column])
+			value, can_merge = stack_inserter(stack, this.board[row][column], can_merge)
 			if value > child.max {
 				child.max = value // update max if need be
 			}
@@ -163,9 +169,11 @@ func (this *N2048) apply_helper_horiz(column_start, column_end, dc, operator int
 	child := &N2048{Grid{}, this.max, this, operator,
 		this.path_cost, this.depth + 1}
 	stack := make_stack(4)
+	value := 0
+	can_merge := true
 	for row := 0; row != 4; row++ {
 		for column := column_start; column != column_end; column += dc {
-			value := stack_inserter(stack, this.board[row][column])
+			value, can_merge = stack_inserter(stack, this.board[row][column], can_merge)
 			if value > child.max {
 				child.max = value // update max if need be
 			}
