@@ -20,7 +20,7 @@ func main() {
 	// Generate grid
 	grid := GenGrid()
 	goal_path, path_cost, nodes_expanded := Search(&grid, 4, BF, true)
-	fmt.Printf("Path: %v\nCost: %v\nTotal Nodes Expanded in search: %v",
+	fmt.Printf("Path: %v\nCost: %v\nTotal Nodes Expanded in search: %v\n",
 		goal_path, path_cost, nodes_expanded)
 }
 
