@@ -1,0 +1,1332 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"in",
+				"intercept"
+			],
+			[
+				"e",
+				"eita"
+			],
+			[
+				"nod",
+				"node2	*N2048 ν"
+			],
+			[
+				"pa",
+				"parent	*N2048 ν"
+			],
+			[
+				"sol",
+				"solution	N2048 ν"
+			],
+			[
+				"ma",
+				"maximum	int ν"
+			],
+			[
+				"st",
+				"start	int ν"
+			],
+			[
+				"d",
+				"direction	int ν"
+			],
+			[
+				"eva",
+				"evaluation_func	func(Node) int ʈ"
+			],
+			[
+				"Pr",
+				"Println	n int, err error ƒ"
+			],
+			[
+				"im",
+				"import	import (...) ʂ"
+			],
+			[
+				"pr",
+				"Println	n int, err error ƒ"
+			],
+			[
+				"thu",
+				"thumbnail"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"bac",
+				"background-color"
+			],
+			[
+				"tex",
+				"text-align"
+			],
+			[
+				"ali",
+				"text-align"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"fu",
+				"function"
+			],
+			[
+				"ca",
+				"caret"
+			],
+			[
+				"c",
+				"caret"
+			],
+			[
+				"fla",
+				"flash"
+			],
+			[
+				"par",
+				"params"
+			],
+			[
+				"us",
+				"user_signed_in"
+			],
+			[
+				"ima",
+				"image-responsive"
+			],
+			[
+				"pad",
+				"padding-top"
+			],
+			[
+				"image",
+				"image_tag"
+			],
+			[
+				"ba",
+				"background-color"
+			],
+			[
+				"re",
+				"regionsArray"
+			],
+			[
+				"max",
+				"maximum"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "main.go",
+			"settings":
+			{
+				"buffer_size": 1804,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 17 files for \"Grid\" (case sensitive)\n\n/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/main.go:\n   18  func main() {\n   19  	// Generate grid\n   20: 	grid := GenGrid()\n   21  	goal_path, path_cost, nodes_expanded := Search(&grid, 8, BF, true)\n   22  	fmt.Printf(\"Path: %v\\nCost: %v\\nTotal Nodes Expanded in search: %v\\n\",\n   ..\n   26  }\n   27  \n   28: func Search(grid *Grid, M int, strategy int, visualize bool) (p Path, cost int, nodes uint64) {\n   29  	problem := P2048{M, grid}\n   30  	var (\n   ..\n   78  }\n   79  \n   80: func GenGrid() Grid {\n   81: 	grid := Grid{}\n   82  	//rand.Seed(time.Now().UTC().Unix())\n   83  	rand.Seed(42)\n\n/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/n2048.go:\n    5  )\n    6  \n    7: type Grid [4][4]int\n    8  \n    9  type N2048 struct {\n   10: 	board     Grid   // The grid\n   11  	max       int    // maximum value in board\n   12  	parent    *N2048 // nil if root\n   ..\n  140  // +ve dr for down -ve for up\n  141  func (this *N2048) apply_helper_vert(row_start, row_end, dr, operator int) Node {\n  142: 	child := &N2048{Grid{}, this.max, this, operator,\n  143  		this.path_cost, this.depth + 1}\n  144  	stack := make_stack(4)\n  ...\n  167  // +ve dc for right -ve for left\n  168  func (this *N2048) apply_helper_horiz(column_start, column_end, dc, operator int) Node {\n  169: 	child := &N2048{Grid{}, this.max, this, operator,\n  170  		this.path_cost, this.depth + 1}\n  171  	stack := make_stack(4)\n  ...\n  191  \n  192  // adds a 2 at the first free corner if there is one\n  193: func add_tile(g *Grid) {\n  194  	r, c, ok := first_empty_corner(g)\n  195  	if ok {\n  ...\n  201  // and ok is true if there is an empty corner\n  202  // Corner order : Top-left and then clock-wise\n  203: func first_empty_corner(g *Grid) (r, c int, ok bool) {\n  204  	if g[0][0] == 0 {\n  205  		return 0, 0, true\n  ...\n  216  \n  217  // Returns the max value in a grid.\n  218: func max_of_grid(g *Grid) int {\n  219  	max := 0\n  220  	for i := 0; i < 4; i++ {\n\n/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/p2048.go:\n    3  type P2048 struct {\n    4  	goal int\n    5: 	grid *Grid\n    6  }\n    7  \n\n13 matches across 3 files\n",
+			"settings":
+			{
+				"buffer_size": 2211,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"contents": "package main\n\nimport \"fmt\"\n\nfunc hello() {\n	fmt.Println(\"hello\")\n	var a []int\n	fmt.Println(len(a))\n	a = append(a, 4)\n	fmt.Println(len(a))\n	a = make([]int, 10)\n	fmt.Println(len(a))\n	a = a[10:]\n	fmt.Println(len(a))\n	fmt.Println(cap(a))\n	var n Node\n	fmt.Println(n == nil)\n	type Hey []int\n\n	// node experiment\n	board := [4][4]int{\n		{2, 0, 2, 0},\n		{2, 2, 2, 2},\n		{2, 0, 0, 0},\n		{2, 4, 0, 2}}\n	var root *N2048\n	var node N2048 = N2048{board, 0, root, 0, 0, 0}\n	var node1 N2048 = make_node(node, 1)\n	var node5 N2048 = make_node(node1, 1)\n	for i := 0; i < 4; i++ {\n		fmt.Println(node.board[i])\n	}\n	fmt.Println(\"*******\")\n	for i := 0; i < 4; i++ {\n		fmt.Println(node1.board[i])\n	}\n	fmt.Println(\"*******\")\n	for i := 0; i < 4; i++ {\n		fmt.Println(node5.board[i])\n	}\n	var p Problem\n	p = &P2048{32}\n	var sol Node = general_search(p, bfs)\n	var solution = sol.(N2048)\n	var parent *N2048 = solution.parent\n	fmt.Println(\"***sol***\")\n	for i := 0; i < 4; i++ {\n		fmt.Println(solution.board[i])\n	}\n	for parent != nil {\n		fmt.Println(\"***sol***\")\n		for i := 0; i < 4; i++ {\n			fmt.Println(parent.board[i])\n		}\n		parent = parent.parent\n	}\n}\n",
+			"file": "sec.go",
+			"file_size": -1,
+			"file_write_time": -1,
+			"settings":
+			{
+				"buffer_size": 1122,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "p2048.go",
+			"settings":
+			{
+				"buffer_size": 824,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/steam/games/mark of the ninja/bin/ninja-bin",
+			"settings":
+			{
+				"buffer_size": 357,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "n2048.go",
+			"settings":
+			{
+				"buffer_size": 5375,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "strategy.go",
+			"settings":
+			{
+				"buffer_size": 1197,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 59.0,
+		"selected_items":
+		[
+			[
+				"Package Control: rem",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"men",
+				"View: Toggle Menu"
+			],
+			[
+				"side",
+				"View: Toggle Side Bar"
+			],
+			[
+				"toggle",
+				"View: Toggle Menu"
+			],
+			[
+				"to",
+				"View: Toggle Side Bar"
+			],
+			[
+				"togg",
+				"View: Toggle Menu"
+			]
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 126.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048"
+	],
+	"file_history":
+	[
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/stack.go",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/strategy.go",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/search.go",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/.gitignore",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/types.go",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/notes.txt",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/n2048.go",
+		"/home/mohamed/workspace/R/nn_script.r",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/p2048.go",
+		"/steam/games/mark of the ninja/bin/ninja-bin",
+		"/steam/games/Hotline Miami/Hotline Miami/README",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/main.go",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/report/makefile",
+		"/steam/games/Mount & Blade: Warband/MountBladeWarband/mb_warband.sh",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/sec.go",
+		"/home/mohamed/.config/sublime-text-3/Packages/Terminal/Default (Linux).sublime-keymap",
+		"/home/mohamed/.config/sublime-text-3/Packages/User/Terminal.sublime-settings",
+		"/home/mohamed/.config/sublime-text-3/Packages/Terminal/Terminal.sublime-settings",
+		"/home/mohamed/.config/sublime-text-3/Packages/GoSublime/USAGE.md",
+		"/home/mohamed/.config/sublime-text-3/Packages/GoSublime/GoSublime.sublime-settings",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/generalSearch.go",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/general_search.go",
+		"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048/general_.gosearch",
+		"/home/mohamed/.config/sublime-text-3/Packages/GoSublime/CHANGELOG.md",
+		"/tmp/kde-mohamed/konquerork28224.html",
+		"/home/mohamed/workspace/firefox/facebook/data/content-worker.js",
+		"/home/mohamed/workspace/firefox/fbnotifier/package.json",
+		"/home/mohamed/workspace/firefox/fbnotifier/data/content-worker.js",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/README.md",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/OptionallyRunTest.r",
+		"/home/mohamed/Downloads/r-stockPrediction-master/r-stockPrediction-master/input/A.csv",
+		"/home/mohamed/workspace/R/stock/important rules.txt",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/findBestPrediction.r",
+		"/home/mohamed/Downloads/r-stockPrediction-master/r-stockPrediction-master/findBestPrediction.r",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/input/F.csv",
+		"/home/mohamed/workspace/R/stock/regmods-006_Introduction.txt",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/input/FICO.csv",
+		"/home/mohamed/mycen",
+		"/home/mohamed/workspace/R/stock/summary/stock.csv",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/input/C.csv",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/input/C-R.csv",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/input/CRI.csv",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/Project Report/cscie185_StockPredictions_slides.ppt",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/loopInput.r",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/LICENSE.md",
+		"/home/mohamed/workspace/R/stock/.Rproj.user/FB2D0344/pcs/windowlayoutstate.pper",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/stock.sublime-project",
+		"/home/mohamed/workspace/R/stock/r-stockPrediction-master/input/ACP.P.csv",
+		"/home/mohamed/workspace/R/stock/.Rproj.user/FB2D0344/pcs/files-pane.pper",
+		"/home/mohamed/workspace/python/scrapy/brand/brand/brand",
+		"/home/mohamed/workspace/python/scrapy/brand/brand/spiders/brands_spider.py",
+		"/home/mohamed/workspace/R/r-stockPrediction-master/loopInput.r",
+		"/home/mohamed/workspace/R/r-stockPrediction-master/OptionallyRunTest.r",
+		"/home/mohamed/workspace/R/r-stockPrediction-master/findBestPrediction.r",
+		"/tmp/.fr-Q1Whkz/summary/20131204.txt",
+		"/tmp/.fr-7KPBgh/summary/20060702.txt",
+		"/tmp/.fr-tjavci/summary/20060321.txt",
+		"/home/mohamed/workspace/R/stock/egx30",
+		"/home/mohamed/workspace/R/stock/summary/all.csv",
+		"/home/mohamed/workspace/rails/site/app/assets/stylesheets/application.css",
+		"/home/mohamed/workspace/rails/site/app/assets/stylesheets/pdf.scss.css",
+		"/home/mohamed/workspace/rails/site/app/assets/stylesheets/caret.css.scss",
+		"/home/mohamed/workspace/rails/site/app/assets/stylesheets/products.css.scss",
+		"/tmp/.fr-h0aZl0/summary/20030507.txt",
+		"/home/mohamed/workspace/rails/site/app/views/layouts/application.html.erb",
+		"/home/mohamed/workspace/rails/site/app/views/cart/index.html.erb",
+		"/home/mohamed/workspace/rails/site/app/views/products/index.html.erb",
+		"/home/mohamed/workspace/rails/site/app/assets/stylesheets/application.css.scss",
+		"/home/mohamed/workspace/rails/site/app/views/products/show.html.erb",
+		"/tmp/.fr-EZHpXo/summary/20030515.txt",
+		"/home/mohamed/workspace/rails/site/app/assets/stylesheets/application.css~",
+		"/home/mohamed/workspace/rails/site/app/assets/javascripts/application.js",
+		"/home/mohamed/workspace/rails/site/app/models/ability.rb",
+		"/home/mohamed/workspace/rails/site/Gemfile",
+		"/home/mohamed/workspace/rails/site/tmp/cache/assets/development/sass/850356d8d2b91e1dedb3b5221ab2947b6ff7622f/ra.calendar-additions.scssc",
+		"/home/mohamed/workspace/rails/site/public/assets/application-effc0e02ecc8055b534ff72ebebcadbc.js",
+		"/home/mohamed/workspace/rails/site/public/assets/application-ecd6ff301ec637f7afd96e2aeb3f2012.css",
+		"/home/mohamed/workspace/rails/site/public/assets/application-b2a4552d907025c2fb1150abe5abd858.js",
+		"/home/mohamed/workspace/rails/site/public/assets/application-3ddf3167a3a8dfe54dd277e6e0d93276.css",
+		"/home/mohamed/workspace/rails/site/public/assets/application-0ebaf2688a1a2e6b83ccedf1a8c56e05.js",
+		"/home/mohamed/workspace/rails/site/app/helpers/application_helper.rb",
+		"/home/mohamed/workspace/rails/site/app/controllers/application_controller.rb~",
+		"/home/mohamed/workspace/rails/site/app/controllers/application_controller.rb",
+		"/home/mohamed/workspace/rails/site/app/assets/javascripts/application.js~",
+		"/home/mohamed/workspace/hoarde/01223110051 أحمد البرنس",
+		"/home/mohamed/workspace/rails/site/app/assets/javascripts/products.js.coffee",
+		"/home/mohamed/workspace/rails/site/test/models/product_test.rb",
+		"/home/mohamed/workspace/rails/site/app/helpers/products_helper.rb",
+		"/home/mohamed/workspace/rails/site/app/controllers/products_controller.rb~",
+		"/home/mohamed/workspace/rails/site/app/controllers/products_controller.rb",
+		"/home/mohamed/workspace/rails/site/app/assets/javascripts/products.js",
+		"/home/mohamed/workspace/rails/site/test/fixtures/products.yml",
+		"/home/mohamed/workspace/rails/site/config/environments/production.rb~",
+		"/home/mohamed/workspace/rails/site/config/environments/production.rb",
+		"/home/mohamed/workspace/rails/site/app/models/product.rb~",
+		"/home/mohamed/workspace/rails/site/app/models/product.rb",
+		"/home/mohamed/workspace/rails/site/public/assets/bootstrap/glyphicons-halflings-regular-dd55935477ecf169e4d77cfcd00964d7.svg",
+		"/home/mohamed/workspace/rails/site/db/migrate/20140818175407_product_has__multiple_images.rb~",
+		"/home/mohamed/workspace/rails/site/config/application.rb",
+		"/home/mohamed/workspace/rails/site/app/controllers/cart_controller.rb",
+		"/home/mohamed/workspace/rails/site/app/models/cart.rb",
+		"/home/mohamed/workspace/rails/site/tmp/cache/assets/development/sass/857a5cebd4186dfa97ddaddf1b38ef682ac318aa/caret.css.scssc",
+		"/home/mohamed/workspace/rails/site/config.ru",
+		"/home/mohamed/workspace/rails/site/app/views/confirmable/mailer/reset_password_instructions.html.erb",
+		"/home/mohamed/workspace/rails/site/tmp/cache/assets/development/sass/864b64c417ade32555222e08dccccc3444841875/_popovers.scssc",
+		"/home/mohamed/workspace/rails/site/app/uploaders/shoe_uploader.rb",
+		"/home/mohamed/workspace/rails/site/app/views/cart/index.html.erb~",
+		"/home/mohamed/workspace/rails/site/app/models/order.rb",
+		"/home/mohamed/workspace/rails/site/rails_admin_print/app/views/rails_admin/main/print.html.erb",
+		"/home/mohamed/workspace/rails/site/rails_admin_print/app/views/rails_admin/main/print.haml",
+		"/home/mohamed/workspace/rails/site/app/views/layouts/application.pdf.haml",
+		"/home/mohamed/workspace/rails/site/rails_admin_print/lib/rails_admin_print.rb",
+		"/home/mohamed/workspace/rails/site/app/views/products/show.html.erb~",
+		"/home/mohamed/workspace/rails/site/public/assets/bootstrap/glyphicons-halflings-regular-f32c7c112d6ae9aafd723c78dfe35bcf.woff",
+		"/home/mohamed/workspace/rails/site/tmp/cache/assets/development/sass/1474c567fbd2760ec447b495249cb048d449c469/bootstrap.scssc",
+		"/home/mohamed/workspace/rails/site/bin/bundle",
+		"/home/mohamed/workspace/rails/site/tmp/cache/assets/development/sass/864b64c417ade32555222e08dccccc3444841875/_buttons.scssc",
+		"/home/mohamed/workspace/rails/site/tmp/cache/assets/development/sass/864b64c417ade32555222e08dccccc3444841875/_utilities.scssc",
+		"/home/mohamed/workspace/rails/site/app/views/caret/index.html.erb~",
+		"/home/mohamed/workspace/rails/site/app/views/caret/index.html.erb",
+		"/home/mohamed/workspace/rails/site/rails_admin_print/app/assets/stylecheets/print.css",
+		"/home/mohamed/workspace/rails/site/config/initializers/assets.rb",
+		"/home/mohamed/workspace/rails/site/tmp/cache/assets/development/sprockets/d03effe8a4a1c7cfe43ee17aaf315075",
+		"/home/mohamed/workspace/rails/site/tmp/cache/assets/development/sprockets/daeaa0b03aefc5575a34a3dcbf03bee8",
+		"/home/mohamed/workspace/rails/site/tmp/cache/assets/development/sass/aee46d7d099889ebe0f1f20b53ed14703aaf39ab/_size.scssc",
+		"/home/mohamed/workspace/rails/site/tmp/cache/assets/development/sprockets/ad908c000fdf47a86fd7d30664faf2eb",
+		"/tmp/order_2014-08-10_04h03m52.csv",
+		"/steam/SteamLibrary/SteamApps/appmanifest_262410.acf"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 96.0,
+		"where_history":
+		[
+			"/home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"Grid",
+			"grid",
+			"Grid",
+			"first_em",
+			"M",
+			"expand",
+			"p",
+			"-",
+			"-te",
+			"]",
+			"[i",
+			"e(",
+			"var maximum int\n		for i := 0; i < 4; i++ {\n			for j := 0; j < 4; j++ {\n				if b[i][j] == 0 {\n					temp := i*4 + j\n					empty_cells = append(empty_cells, temp)\n				} else if b[i][j] > maximum {\n					maximum = b[i][j]\n				}\n			}\n		}\n		if len(empty_cells) != 0 {\n			pos := rand.Intn(len(empty_cells))",
+			"out = N2048{b, maximum, &node, 1, node.path_cost + 1}",
+			"> max",
+			"append(emp",
+			"root",
+			"node.path_cost()",
+			"ByAge",
+			"env",
+			"hello",
+			"39",
+			"h=",
+			"2013",
+			"start=",
+			"start=2013",
+			"start=",
+			"window",
+			"fitr",
+			"window",
+			"train",
+			"icon-",
+			"Stock$",
+			"Stockadd",
+			"close",
+			"predHWStockr",
+			"ACO",
+			"read.table(\"./input/ACO.csv\"",
+			"forecast",
+			"egx",
+			",0",
+			">",
+			"<",
+			"<TICKER>,<PER>,<DTYYYYMMDD>,<TIME>,<OPEN>,<HIGH>,<LOW>,<CLOSE>,<VOL>",
+			"slate",
+			"amelia",
+			"cyborg",
+			"darkly",
+			"yeti",
+			"yati",
+			"united",
+			"spacelab",
+			"lumen",
+			"laumen",
+			"readable",
+			"journal",
+			"cosmo",
+			"simplex",
+			"flatly",
+			"flaty",
+			"flat",
+			"flaty",
+			"active",
+			"<td> <%",
+			"<table",
+			"tanle",
+			"<table class=\"",
+			"table",
+			"col-",
+			"font",
+			" 1)",
+			"nt",
+			"nt)",
+			"m+1)",
+			"-1)",
+			":page=> n",
+			"shadow",
+			"background:",
+			"if @product.image",
+			"image-thu",
+			"md",
+			"span4",
+			"<div class=\"thumbnail\">",
+			"<li>",
+			">\n",
+			"<li>",
+			"btn",
+			"font",
+			"contin",
+			"bfs",
+			"bfq",
+			"()\n",
+			"o",
+			"106",
+			">",
+			"        <",
+			"\n}",
+			"width",
+			"color",
+			";\n",
+			"\n    ",
+			"2",
+			"reindent",
+			"500",
+			"100 3",
+			" ",
+			"    ",
+			" 0,",
+			"172",
+			"    ",
+			"  ",
+			"+",
+			"stid",
+			"\"",
+			"narea\":\"",
+			" ",
+			"stid",
+			"mn",
+			"stid",
+			"http://162.13.11.185/Bey2ol",
+			"http://162.13.11.185/Bey2ollak/Traffic?action=getRoadsStatus&sprotocol=1&ver=B3.2.3&w=",
+			"http://162.13.11.185/Bey2ollak/Traffic?action=getRoadsStatus&sprotocol=1&ver=B3.2.3&w=240&h=320&deviceType=10&imei=355642050535970&op=60202&deviceName=GT-S5282&lang=1&ckid=a38f1c1658b4a23cf04f15085a5f8b7fd0b3798bfa886353e3e51cd6&protocol=9&osv=4.1.2&userID=973136&format=2&locS=1&lat=15.044444&lng=-18.5333",
+			"http://162.13.11.185/bey2ollak/traffic?action=getroadsstatus&sprotocol=1&ver=b3.2.3&w=240&h=320&devicetype=10&imei=355642050535970&op=60202&devicename=gt-s5282&lang=1&ckid=a38f1c1658b4a23cf04f15085a5f8b7fd0b3798bfa886353e3e51cd6&protocol=9&osv=4.1.2&userid=973136&format=2&locS=1&lat=15.044444&lng=-18.5333",
+			"#4",
+			"\\label",
+			"chapter",
+			"network",
+			"	"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"var maximum, count int\n		for i := 0; i < 4; i++ {\n			for j := 0; j < 4; j++ {\n				if b[i][j] == 0 {\n					temp := i*4 + j\n					empty_cells = append(empty_cells, temp)\n					count += 1\n				} else if b[i][j] > maximum {\n					maximum = b[i][j]\n				}\n			}\n		}\n		if count != 0 {\n			pos := rand.Intn(count)",
+			"out = N2048{b, maximum, &node, 1, node.path_cost + 1,\n			node.depth + 1}",
+			"> maximum",
+			"empty_cells = append(emp",
+			"node.path_cost",
+			"ByEval",
+			"facebook-",
+			"firefox-",
+			"simplex",
+			"slate",
+			"amelia",
+			"cyborg",
+			"darkly",
+			"yeti",
+			"yati",
+			"united",
+			"spacelab",
+			"lumen",
+			"laumen",
+			"readable",
+			"journal",
+			"cosmo",
+			"simplex",
+			"samplex",
+			"<td class=\"vert-align\"> <%",
+			"img-thu",
+			"sm",
+			"span3",
+			"",
+			" ",
+			" 15,",
+			" ",
+			"",
+			" "
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 4,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "main.go",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1804,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								215,
+								215
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/GoSublime/syntax/GoSublime-Go.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2211,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										190,
+										194
+									],
+									[
+										399,
+										403
+									],
+									[
+										563,
+										567
+									],
+									[
+										570,
+										574
+									],
+									[
+										593,
+										597
+									],
+									[
+										775,
+										779
+									],
+									[
+										843,
+										847
+									],
+									[
+										1109,
+										1113
+									],
+									[
+										1381,
+										1385
+									],
+									[
+										1585,
+										1589
+									],
+									[
+										1798,
+										1802
+									],
+									[
+										1963,
+										1967
+									],
+									[
+										2162,
+										2166
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "sec.go",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1122,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								494,
+								494
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/GoSublime/syntax/GoSublime-Go.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 112.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "p2048.go",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 824,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								620,
+								620
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/GoSublime/syntax/GoSublime-Go.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/steam/games/mark of the ninja/bin/ninja-bin",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 357,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "n2048.go",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5375,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4597,
+								4597
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/GoSublime/syntax/GoSublime-Go.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2508.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "strategy.go",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1197,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								385,
+								385
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/GoSublime/syntax/GoSublime-Go.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.9o:///home/mohamed/workspace/golang/src/github.com/muhammedabuali/AI2048":
+	{
+		"height": 215.0
+	},
+	"output.MarGo-output":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "2048.sublime-project",
+	"replace":
+	{
+		"height": 446.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"sta",
+				"strategy.go"
+			],
+			[
+				"t",
+				"types.go"
+			],
+			[
+				"s",
+				"search.go"
+			],
+			[
+				"n2",
+				"n2048.go"
+			],
+			[
+				"p2",
+				"p2048.go"
+			],
+			[
+				"sec",
+				"sec.go"
+			],
+			[
+				"ma",
+				"main.go"
+			],
+			[
+				"m",
+				"main.go"
+			],
+			[
+				"n",
+				"notes.txt"
+			],
+			[
+				"ni",
+				"~/workspace/R/nn_script.r"
+			],
+			[
+				"se",
+				"search.go"
+			],
+			[
+				"mai",
+				"main.go"
+			],
+			[
+				"str",
+				"strategy.go"
+			],
+			[
+				"sea",
+				"search.go"
+			],
+			[
+				"stra",
+				"strategy.go"
+			],
+			[
+				"con",
+				"data/content-worker.js"
+			],
+			[
+				"ind",
+				"data/index.html"
+			],
+			[
+				"find",
+				"r-stockPrediction-master/findBestPrediction.r"
+			],
+			[
+				"read",
+				"r-stockPrediction-master/README.md"
+			],
+			[
+				"tes",
+				"r-stockPrediction-master/OptionallyRunTest.r"
+			],
+			[
+				"pred",
+				"r-stockPrediction-master/findBestPrediction.r"
+			],
+			[
+				"it",
+				"brand/items.py"
+			],
+			[
+				"application.css",
+				"app/assets/stylesheets/application.css.scss"
+			],
+			[
+				"index",
+				"app/views/products/index.html.erb"
+			],
+			[
+				"applica",
+				"app/views/layouts/application.html.erb"
+			],
+			[
+				"produc",
+				"app/assets/stylesheets/products.css.scss"
+			],
+			[
+				"pdf",
+				"app/assets/stylesheets/pdf.scss.css"
+			],
+			[
+				"cart.css",
+				"app/assets/stylesheets/caret.css.scss"
+			],
+			[
+				"inde",
+				"app/views/cart/index.html.erb"
+			],
+			[
+				"appl",
+				"app/assets/stylesheets/application.css"
+			],
+			[
+				"show",
+				"app/views/products/show.html.erb"
+			],
+			[
+				"produts.css",
+				"app/assets/stylesheets/products.css.scss"
+			],
+			[
+				"application.htm",
+				"app/views/layouts/application.html.erb"
+			],
+			[
+				"print.ht",
+				"rails_admin_print/app/views/rails_admin/main/print.html.erb"
+			],
+			[
+				"abi",
+				"app/models/ability.rb"
+			],
+			[
+				"print.html",
+				"rails_admin_print/app/views/rails_admin/main/print.html.erb"
+			],
+			[
+				"print.rb",
+				"rails_admin_print/lib/rails_admin_print.rb"
+			],
+			[
+				"boots",
+				"tmp/cache/assets/development/sass/1474c567fbd2760ec447b495249cb048d449c469/bootstrap.scssc"
+			],
+			[
+				"css",
+				"app/assets/stylesheets/products.css.scss"
+			],
+			[
+				"lay",
+				"app/views/layouts/application.html.erb"
+			],
+			[
+				"caretco",
+				"app/controllers/caret_controller.rb"
+			],
+			[
+				"asse",
+				"config/initializers/assets.rb"
+			],
+			[
+				"appli",
+				"app/assets/javascripts/application.js"
+			],
+			[
+				"caret.js",
+				"app/assets/javascripts/caret.js.coffee"
+			],
+			[
+				"applic",
+				"app/assets/javascripts/application.js"
+			],
+			[
+				"la",
+				"app/views/layouts/application.html.erb"
+			],
+			[
+				"care",
+				"app/models/caret.rb"
+			],
+			[
+				"order",
+				"app/models/order.rb"
+			],
+			[
+				"sche",
+				"db/schema.rb"
+			],
+			[
+				"use",
+				"app/models/user.rb"
+			],
+			[
+				"da",
+				"config/database.yml"
+			],
+			[
+				"gem",
+				"Gemfile"
+			],
+			[
+				"dat",
+				"config/database.yml"
+			],
+			[
+				"de",
+				"config/environments/development.rb"
+			],
+			[
+				"config",
+				"config/environments/development.rb"
+			],
+			[
+				"env",
+				"config/environment.rb"
+			],
+			[
+				"upl",
+				"app/uploaders/shoe_uploader.rb"
+			],
+			[
+				"uploa",
+				"app/uploaders/shoe_uploader.rb"
+			],
+			[
+				"shoe",
+				"app/uploaders/shoe_uploader.rb"
+			],
+			[
+				"sh",
+				"app/uploaders/shoe_uploader.rb"
+			],
+			[
+				"gemf",
+				"Gemfile.lock"
+			],
+			[
+				"sho",
+				"app/uploaders/shoe_uploader.rb"
+			],
+			[
+				"products.css",
+				"app/assets/stylesheets/products.css.scss"
+			],
+			[
+				"app",
+				"app/assets/stylesheets/application.css"
+			],
+			[
+				"carets",
+				"tmp/cache/assets/development/sass/857a5cebd4186dfa97ddaddf1b38ef682ac318aa/caret.css.scssc"
+			],
+			[
+				"rout",
+				"config/routes.rb"
+			],
+			[
+				"or",
+				"app/models/order.rb"
+			],
+			[
+				"shce",
+				"db/schema.rb"
+			],
+			[
+				"pr",
+				"app/controllers/products_controller.rb"
+			],
+			[
+				"user",
+				"app/models/user.rb"
+			],
+			[
+				"prod",
+				"app/controllers/products_controller.rb"
+			],
+			[
+				"devise",
+				"config/initializers/devise.rb"
+			],
+			[
+				"",
+				"app/controllers/products_controller.rb"
+			],
+			[
+				"adminhtml",
+				"app/views/admin/index.html.erb"
+			],
+			[
+				"ad",
+				"app/controllers/admin_controller.rb"
+			],
+			[
+				"simp",
+				"simple-sidebar.html"
+			],
+			[
+				"new",
+				"app/views/devise/registrations/new.html.erb"
+			],
+			[
+				"products.cs",
+				"app/assets/stylesheets/products.css.scss"
+			],
+			[
+				"product",
+				"app/models/product.rb~"
+			],
+			[
+				"rou",
+				"config/routes.rb"
+			],
+			[
+				"boo",
+				"app/assets/javascripts/lib/bootstrap.min.js"
+			],
+			[
+				"boot",
+				"app/assets/javascripts/lib/bootstrap.min.js"
+			],
+			[
+				"application.cs",
+				"app/assets/stylesheets/application.css.sass"
+			],
+			[
+				"2s",
+				"~/workspace/java/coursera/2sum.txt"
+			],
+			[
+				"main",
+				"src/user_interface/Main.java"
+			],
+			[
+				"oper",
+				"src/operators/Operator.java"
+			],
+			[
+				"dbb",
+				"src/data_structures/BPlusTree/DBBTree.java"
+			],
+			[
+				"dbind",
+				"src/DBStructure/DBIndex.java"
+			],
+			[
+				"in",
+				"src/user_interface/Main.java"
+			],
+			[
+				"page",
+				"src/transcations/PageUtil.java"
+			],
+			[
+				"bu",
+				"src/transcations/DBBufferManager.java"
+			],
+			[
+				"selec",
+				"src/query_planner/SelectPlanner.java"
+			],
+			[
+				"ra",
+				"src/relational_algebra/Translator.java"
+			],
+			[
+				"opera",
+				"src/operators/Operator.java"
+			],
+			[
+				"planer",
+				"src/query_planner/Planer.java"
+			],
+			[
+				"parse",
+				"src/user_interface/Parser.java"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"~/workspace/golang/src/github.com/muhammedabuali/AI2048/2048.sublime-project"
+			],
+			[
+				"cp",
+				"~/workspace/prolog/cp/cp.sublime-project"
+			],
+			[
+				"c",
+				"~/workspace/prolog/cp/cp.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 191.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

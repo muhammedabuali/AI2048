@@ -17,10 +17,13 @@ const (
 
 func main() {
 	// Generate grid
-	grid := GenGrid()
-	goal_path, path_cost, nodes_expanded := Search(&grid, 8, BF, true)
+	grid := GenGrid2()
+	goal_path, path_cost, nodes_expanded := Search2(&grid, 4, BF, true)
 	fmt.Printf("Path: %v\nCost: %v\nTotal Nodes Expanded in search: %v\n",
 		goal_path, path_cost, nodes_expanded)
+	/*var grid G2
+	grid = grid.grid_ins(0, 1, 128)
+	fmt.Println(grid.grid_access(0, 1))*/
 }
 
 func Search(grid *Grid, M int, strategy int, visualize bool) (p Path, cost int, nodes uint64) {
