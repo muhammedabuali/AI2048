@@ -43,4 +43,5 @@ type Stack interface {
 	push(int)
 	empty() bool
 	full() bool
+	display()
 }

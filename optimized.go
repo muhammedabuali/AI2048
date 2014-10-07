@@ -14,7 +14,7 @@ func (grid G2) grid_ins(row, col, val int) G2 {
 	x := row*16 + col*4
 	pow := math.Log2(float64(val))
 	y := G2(pow) << G2(x)
-	mask := ^(0xff << uint(x))
+	mask := ^(uint64(0xf) << uint64(x))
 	grid = grid&G2(mask) | G2(y)
 	return grid
 }
@@ -222,6 +222,7 @@ func (this *N2) apply_helper_horiz(column_start, column_end, dc, operator int) N
 		for reverse := column_end - dc; !stack.empty(); reverse -= dc {
 			child.board = child.board.grid_ins(row, reverse, stack.pop())
 		}
+
 	}
 	add_tile2(&child.board) // add a two in the first free corner
 	return child
@@ -289,32 +290,30 @@ func (*P2) expand(node Node) []Node {
 	// Apply all possible operators
 	if node.can_apply(LEFT) {
 		new_node := node.apply(LEFT)
-		fmt.Println(hash)
-		fmt.Println((node.(*N2)).board.display())
-		fmt.Println((new_node.(*N2)).board.display())
 		if !hash[(new_node.(*N2)).board] {
 			nodes = append(nodes, new_node)
+			hash[(new_node.(*N2)).board] = true
 		}
 	}
 	if node.can_apply(RIGHT) {
 		new_node := node.apply(RIGHT)
-		fmt.Println((new_node.(*N2)).board.display())
 		if !hash[(new_node.(*N2)).board] {
 			nodes = append(nodes, new_node)
+			hash[(new_node.(*N2)).board] = true
 		}
 	}
 	if node.can_apply(DOWN) {
 		new_node := node.apply(DOWN)
-		fmt.Println((new_node.(*N2)).board.display())
 		if !hash[(new_node.(*N2)).board] {
 			nodes = append(nodes, new_node)
+			hash[(new_node.(*N2)).board] = true
 		}
 	}
 	if node.can_apply(UP) {
 		new_node := node.apply(UP)
-		fmt.Println((new_node.(*N2)).board.display())
 		if !hash[(new_node.(*N2)).board] {
 			nodes = append(nodes, new_node)
+			hash[(new_node.(*N2)).board] = true
 		}
 	}
 
