@@ -18,9 +18,10 @@ const (
 func main() {
 	// Generate grid
 	grid := GenGrid2()
-	goal_path, path_cost, nodes_expanded := Search2(&grid, 4, BF, true)
+	goal_path, path_cost, nodes_expanded := Search2(&grid, 2048, DF, true)
 	fmt.Printf("Path: %v\nCost: %v\nTotal Nodes Expanded in search: %v\n",
 		goal_path, path_cost, nodes_expanded)
+	fmt.Println(len(hash))
 	/*var grid G2
 	grid = grid.grid_ins(0, 1, 128)
 	fmt.Println(grid.grid_access(0, 1))*/
