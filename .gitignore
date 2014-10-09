@@ -23,3 +23,6 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+# sublime workspace
+2048.sublime-workspace

@@ -22,16 +22,32 @@ func (*P2048) expand(node Node) []Node {
 	nodes := make([]Node, 0, 4)
 	// Apply all possible operators
 	if node.can_apply(LEFT) {
-		nodes = append(nodes, node.apply(LEFT))
+		new_node := node.apply(LEFT)
+		if !hash[(new_node.(*N2048)).board] {
+			nodes = append(nodes, new_node)
+			hash[(new_node.(*N2048)).board] = true
+		}
 	}
 	if node.can_apply(RIGHT) {
-		nodes = append(nodes, node.apply(RIGHT))
+		new_node := node.apply(RIGHT)
+		if !hash[(new_node.(*N2048)).board] {
+			nodes = append(nodes, new_node)
+			hash[(new_node.(*N2048)).board] = true
+		}
 	}
 	if node.can_apply(DOWN) {
-		nodes = append(nodes, node.apply(DOWN))
+		new_node := node.apply(DOWN)
+		if !hash[(new_node.(*N2048)).board] {
+			nodes = append(nodes, new_node)
+			hash[(new_node.(*N2048)).board] = true
+		}
 	}
 	if node.can_apply(UP) {
-		nodes = append(nodes, node.apply(UP))
+		new_node := node.apply(UP)
+		if !hash[(new_node.(*N2048)).board] {
+			nodes = append(nodes, new_node)
+			hash[(new_node.(*N2048)).board] = true
+		}
 	}
 
 	return nodes

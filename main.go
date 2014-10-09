@@ -17,14 +17,11 @@ const (
 
 func main() {
 	// Generate grid
-	grid := GenGrid2()
-	goal_path, path_cost, nodes_expanded := Search2(&grid, 2048, DF, true)
+	grid := GenGrid()
+	goal_path, path_cost, nodes_expanded := Search(&grid, 32, BF, true)
 	fmt.Printf("Path: %v\nCost: %v\nTotal Nodes Expanded in search: %v\n",
 		goal_path, path_cost, nodes_expanded)
 	fmt.Println(len(hash))
-	/*var grid G2
-	grid = grid.grid_ins(0, 1, 128)
-	fmt.Println(grid.grid_access(0, 1))*/
 }
 
 func Search(grid *Grid, M int, strategy int, visualize bool) (p Path, cost int, nodes uint64) {
@@ -80,7 +77,8 @@ func get_quing_func(symbol int) Strategy {
 }
 
 func GenGrid() Grid {
-	grid := Grid{}
+	var grid Grid = Grid(0)
+	hash = make(map[Grid]bool)
 	//rand.Seed(time.Now().UTC().Unix())
 	rand.Seed(42)
 	r1, c1, r2, c2 := rand.Intn(4), rand.Intn(4), rand.Intn(4), rand.Intn(4)
@@ -88,7 +86,7 @@ func GenGrid() Grid {
 	for (r1 == r2) && (c2 == c1) {
 		c1 = rand.Intn(4)
 	}
-	grid[r1][c1] = 2
-	grid[r2][c2] = 2
+	grid = grid.grid_ins(r1, c1, 2)
+	grid = grid.grid_ins(r2, c2, 2)
 	return grid
 }
