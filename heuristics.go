@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	//"fmt"
 	"math"
 )
 
@@ -22,6 +22,9 @@ func astar_heuristic_2(n Node) int {
 }
 
 func estimated_cost(node *N2048, proplem *P2048) int {
+	if node.score_flag {
+		return node.score
+	}
 	total_cost := int(float64(proplem.goal) * (math.Log2(float64(proplem.goal)) - 1))
 	current_board := node.board.display()
 	target := int(math.Log2(float64(proplem.goal)))
@@ -54,6 +57,8 @@ func estimated_cost(node *N2048, proplem *P2048) int {
 		needed = (needed - counts[i]) * 2
 	}
 	estimated := total_cost - current_cost
+	node.score = estimated
+	node.score_flag = true
 	//fmt.Println("hello")
 	//fmt.Println("node", node.board.display(), "total cost", total_cost, "current_cost", current_cost)
 	return int(estimated)

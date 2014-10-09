@@ -44,12 +44,14 @@ func (grid Grid) display() [4][4]int {
 }
 
 type N2048 struct {
-	board     Grid   // The grid
-	max       int    // maximum value in board
-	parent    *N2048 // nil if root
-	operator  int    // operator applied on parent to reach this node
-	path_cost int    // cost from initial state to here
-	depth     int    // distance from initial state
+	board      Grid   // The grid
+	max        int    // maximum value in board
+	parent     *N2048 // nil if root
+	operator   int    // operator applied on parent to reach this node
+	path_cost  int    // cost from initial state to here
+	depth      int    // distance from initial state
+	score      int    // heuristic score
+	score_flag bool   //score flag is set
 }
 
 func (node *N2048) get_parent() Node {
@@ -177,7 +179,7 @@ func (this *N2048) apply(operator int) Node {
 // +ve dr for down -ve for up
 func (this *N2048) apply_helper_vert(row_start, row_end, dr, operator int) Node {
 	child := &N2048{0, this.max, this, operator,
-		this.path_cost, this.depth + 1}
+		this.path_cost, this.depth + 1, 0, false}
 	stack := make_stack(4)
 	value := 0
 	can_merge := true
@@ -204,7 +206,7 @@ func (this *N2048) apply_helper_vert(row_start, row_end, dr, operator int) Node 
 // +ve dc for right -ve for left
 func (this *N2048) apply_helper_horiz(column_start, column_end, dc, operator int) Node {
 	child := &N2048{Grid(0), this.max, this, operator,
-		this.path_cost, this.depth + 1}
+		this.path_cost, this.depth + 1, 0, false}
 	stack := make_stack(4)
 	value := 0
 	can_merge := true
