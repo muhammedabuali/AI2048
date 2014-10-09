@@ -1,6 +1,9 @@
 package main
 
-import "sort"
+import (
+	"fmt"
+	"sort"
+)
 
 func enqueue_at_end(nodes []Node, children []Node) []Node {
 	return append(nodes, children...)
@@ -30,11 +33,21 @@ func greedy_enqueue(h Heuristic) Strategy {
 
 func a_star_enqueue(h Heuristic) Strategy {
 	return func(nodes []Node, children []Node) []Node {
-		combined := append(nodes, children...)
+		combined := append(children, nodes...)
 		eval := func(n Node) int {
 			return n.get_path_cost() + h(n)
 		}
+		/*fmt.Println("before sorting", len(combined))
+		fmt.Println(combined)
+		for i := 0; i < len(combined); i++ {
+			fmt.Println(eval(combined[i]), (combined[i].(*N2048)).board.display())
+			fmt.Println(h(combined[i]))
+		}
+		fmt.Println()*/
 		sort.Sort(ByEval{combined, eval})
+		/*fmt.Println("after sorting")
+		fmt.Println(combined)
+		fmt.Println(eval(combined[0]))*/
 		return combined
 	}
 }

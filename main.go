@@ -18,14 +18,15 @@ const (
 func main() {
 	// Generate grid
 	grid := GenGrid()
-	goal_path, path_cost, nodes_expanded := Search(&grid, 32, BF, true)
+	goal_path, path_cost, nodes_expanded := Search(&grid, 4, AS1, true)
 	fmt.Printf("Path: %v\nCost: %v\nTotal Nodes Expanded in search: %v\n",
 		goal_path, path_cost, nodes_expanded)
-	fmt.Println(len(hash))
+	fmt.Println(len(gobal_hash))
 }
 
 func Search(grid *Grid, M int, strategy int, visualize bool) (p Path, cost int, nodes uint64) {
 	problem := P2048{M, grid}
+	global_problem = &problem
 	var (
 		target         Node
 		success        bool
@@ -78,7 +79,7 @@ func get_quing_func(symbol int) Strategy {
 
 func GenGrid() Grid {
 	var grid Grid = Grid(0)
-	hash = make(map[Grid]bool)
+	gobal_hash = make(map[Grid]bool)
 	//rand.Seed(time.Now().UTC().Unix())
 	rand.Seed(42)
 	r1, c1, r2, c2 := rand.Intn(4), rand.Intn(4), rand.Intn(4), rand.Intn(4)

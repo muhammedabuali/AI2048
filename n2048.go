@@ -7,7 +7,7 @@ import (
 
 type Grid uint64
 
-var hash map[Grid]bool
+var gobal_hash map[Grid]bool
 
 func (grid Grid) grid_ins(row, col, val int) Grid {
 	x := row*16 + col*4
