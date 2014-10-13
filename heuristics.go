@@ -14,7 +14,7 @@ func greedy_heuristic_2(n Node) int {
 }
 
 func astar_heuristic_1(n Node) int {
-	return estimated_cost(n.(*N2048), global_problem.(*P2048))
+	return n.get_path_cost() + estimated_cost(n.(*N2048), global_problem.(*P2048))
 }
 
 func astar_heuristic_2(n Node) int {

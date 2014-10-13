@@ -33,7 +33,7 @@ type Problem interface {
 	expand(n Node) []Node
 }
 
-type Strategy func(nodes []Node, children []Node) []Node
+type Strategy func(nodes *[]Node, children []Node) []Node
 
 type Heuristic func(Node) int
 
