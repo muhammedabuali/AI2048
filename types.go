@@ -36,12 +36,3 @@ type Problem interface {
 type Strategy func(nodes *[]Node, children []Node) []Node
 
 type Heuristic func(Node) int
-
-type Stack interface {
-	peak() int
-	pop() int
-	push(int)
-	empty() bool
-	full() bool
-	display()
-}

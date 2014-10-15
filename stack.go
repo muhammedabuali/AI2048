@@ -4,42 +4,42 @@ import (
 	"fmt"
 )
 
-type StackImpl struct {
+type Stack struct {
 	data []int
 	top  int
 }
 
-func make_stack(capacity int) Stack {
-	this := &StackImpl{}
+func make_stack(capacity int) *Stack {
+	this := &Stack{}
 	this.data = make([]int, capacity, capacity)
 	this.top = -1
 	return this
 }
 
-func (this *StackImpl) empty() bool {
+func (this *Stack) empty() bool {
 	return this.top == -1
 }
 
-func (this *StackImpl) full() bool {
+func (this *Stack) full() bool {
 	return this.top == (len(this.data) - 1)
 }
 
-func (this *StackImpl) peak() int {
+func (this *Stack) peak() int {
 	return this.data[this.top]
 }
 
-func (this *StackImpl) push(value int) {
+func (this *Stack) push(value int) {
 	this.top++
 	this.data[this.top] = value
 }
 
-func (this *StackImpl) pop() int {
+func (this *Stack) pop() int {
 	top := this.peak()
 	this.data[this.top] = 0
 	this.top--
 	return top
 }
 
-func (this *StackImpl) display() {
+func (this *Stack) display() {
 	fmt.Println(this.data)
 }
