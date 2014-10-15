@@ -141,34 +141,6 @@ func (this *N2048) inc_cost(value int) {
 	this.path_cost += value
 }
 
-/*
-*	Insert into stack with optional merges.
-*	s - stack to insert into
-*	value - value to insert
-*	can_merge - used to track merge state to prevent a number from merging twice
-*	enable_merges - enable or disbale merge functionality.
-*	Returns a tupe (int, bool) int is merge value, bool is updates can_merge state.
- */
-func stack_inserter(s *Stack, value int, can_merge, enable_merges bool) (int, bool) {
-	if value == 0 {
-		return 0, can_merge
-	}
-	sum := 0
-	if enable_merges {
-		if !can_merge {
-			can_merge = true
-		} else if (!s.empty()) && (value == s.peak()) {
-
-			value = value * 2
-			sum = value
-			s.pop()
-			can_merge = false
-		}
-	}
-	s.push(value)
-	return sum, can_merge
-}
-
 func (this *N2048) apply(operator int) Node {
 	switch operator {
 	case RIGHT:
@@ -191,39 +163,29 @@ func (this *N2048) apply_helper_vert(row_start, row_end, dr, operator int) Node 
 	child := &N2048{Grid(0), this.max, this, operator,
 		this.path_cost, this.depth + 1, 0, false}
 	stack := make_stack(4)
-	value := 0
-	can_merge := true
 	for column := 0; column != 4; column++ {
 		for row := row_start; row != row_end; row += dr {
-			value, can_merge = stack_inserter(stack,
-				this.board.grid_access(row, column), can_merge, dr < 0)
-			if value > child.max {
-				child.max = value // update max if need be
+			value := this.board.grid_access(row, column)
+			if value != 0 {
+				// ignore zeros
+				stack.push(value)
 			}
-
-			child.path_cost += value // update operator cost
 		}
 		// Insert in reverse order
 		for reverse := row_end - dr; !stack.empty(); {
-			if dr > 0 {
-				current_value := child.board.grid_access(reverse, column)
-				if current_value == 0 {
-					child.board = child.board.grid_ins(reverse, column, stack.pop())
-					continue
-				} else if current_value == stack.peak() {
-					new_value := stack.pop() * 2
-					child.board = child.board.grid_ins(reverse, column, new_value)
-					child.path_cost += new_value
-					if new_value > child.max {
-						child.max = new_value
-					}
-				}
-				reverse -= dr
-
-			} else {
+			current_value := child.board.grid_access(reverse, column)
+			if current_value == 0 {
 				child.board = child.board.grid_ins(reverse, column, stack.pop())
-				reverse -= dr
+				continue
+			} else if current_value == stack.peak() {
+				new_value := stack.pop() * 2
+				child.board = child.board.grid_ins(reverse, column, new_value)
+				child.path_cost += new_value
+				if new_value > child.max {
+					child.max = new_value
+				}
 			}
+			reverse -= dr // decrement if not equal or merged only
 		}
 	}
 	add_tile(&child.board) // add a two in the first free corner
@@ -237,39 +199,29 @@ func (this *N2048) apply_helper_horiz(column_start, column_end, dc, operator int
 	child := &N2048{Grid(0), this.max, this, operator,
 		this.path_cost, this.depth + 1, 0, false}
 	stack := make_stack(4)
-	value := 0
-	can_merge := true
 	for row := 0; row != 4; row++ {
 		for column := column_start; column != column_end; column += dc {
-			value, can_merge = stack_inserter(stack,
-				this.board.grid_access(row, column), can_merge, dc < 0)
-			if value > child.max {
-				child.max = value // update max if need be
+			value := this.board.grid_access(row, column)
+			if value != 0 {
+				// ignore zeros
+				stack.push(value)
 			}
-
-			child.path_cost += value // update operator cost
 		}
 		// insert in reverse order
 		for reverse := column_end - dc; !stack.empty(); {
-			if dc > 0 {
-				current_value := child.board.grid_access(row, reverse)
-				if current_value == 0 {
-					child.board = child.board.grid_ins(row, reverse, stack.pop())
-					continue
-				} else if current_value == stack.peak() {
-					new_value := stack.pop() * 2
-					child.board = child.board.grid_ins(row, reverse, new_value)
-					child.path_cost += new_value
-					if new_value > child.max {
-						child.max = new_value
-					}
-				}
-				reverse -= dc
-
-			} else {
+			current_value := child.board.grid_access(row, reverse)
+			if current_value == 0 {
 				child.board = child.board.grid_ins(row, reverse, stack.pop())
-				reverse -= dc
+				continue
+			} else if current_value == stack.peak() {
+				new_value := stack.pop() * 2
+				child.board = child.board.grid_ins(row, reverse, new_value)
+				child.path_cost += new_value
+				if new_value > child.max {
+					child.max = new_value
+				}
 			}
+			reverse -= dc // decrement only if not equal or merged
 		}
 	}
 	add_tile(&child.board) // add a two in the first free corner

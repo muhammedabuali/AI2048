@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -123,7 +122,6 @@ func TestMoveLeft(t *testing.T) {
 		{512, 0, 0, 0}}
 	assert.Equal(t, grid_from_array(&expected_array),
 		resulting_node.board, "Result array mismatch")
-	fmt.Println(resulting_node.board.display())
 }
 
 func TestMoveDown(t *testing.T) {
@@ -179,5 +177,4 @@ func TestMoveUp(t *testing.T) {
 		{0, 0, 0, 2}}
 	assert.Equal(t, grid_from_array(&expected_array),
 		resulting_node.board, "Result array mismatch")
-	fmt.Println(resulting_node.board.display())
 }
