@@ -125,7 +125,7 @@ func (this *N2048) can_apply_helper(dr, dc int) bool {
 				continue
 			}
 			current_value := this.board.grid_access(row, column)
-			next_value := this.board.grid_access(row, column)
+			next_value := this.board.grid_access(next_row, next_column)
 			if current_value != 0 {
 				if current_value == next_value || next_value == 0 {
 					return true
