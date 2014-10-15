@@ -197,7 +197,7 @@ func (this *N2048) apply_helper_vert(row_start, row_end, dr, operator int) Node 
 			child.board = child.board.grid_ins(reverse, column, stack.pop())
 		}
 	}
-	addd_tile(&child.board) // add a two in the first free corner
+	add_tile(&child.board) // add a two in the first free corner
 	return child
 
 }
@@ -225,12 +225,12 @@ func (this *N2048) apply_helper_horiz(column_start, column_end, dc, operator int
 		}
 
 	}
-	addd_tile(&child.board) // add a two in the first free corner
+	add_tile(&child.board) // add a two in the first free corner
 	return child
 }
 
 // adds a 2 at the first free corner if there is one
-func addd_tile(g *Grid) {
+func add_tile(g *Grid) {
 	r, c, ok := first_empty_corner(g)
 	if ok {
 		*g = g.grid_ins(r, c, 2)
