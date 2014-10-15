@@ -21,6 +21,10 @@ func astar_heuristic_2(n Node) int {
 	return n.get_path_cost() + estimated_cost2(n.(*N2048), global_problem.(*P2048))
 }
 
+/* estimate coast to reach goal by difference between
+minimal overall score and current essential socre
+essential score: non redundant merges
+*/
 func estimated_cost(node *N2048, proplem *P2048) int {
 	if node.score_flag {
 		return node.score
@@ -62,6 +66,9 @@ func estimated_cost(node *N2048, proplem *P2048) int {
 	return int(estimated)
 }
 
+/* adds another term to the first heuristic that detects if redundant
+moves are inevitable
+*/
 func estimated_cost2(node *N2048, proplem *P2048) int {
 	if node.score_flag {
 		return node.score
@@ -102,7 +109,7 @@ func estimated_cost2(node *N2048, proplem *P2048) int {
 	check := false
 	for l := i - 1; l > 0; l-- {
 		if counts[l] >= 3 {
-
+			//alot of redundant numbers => check redundant merges
 			check = true
 		}
 	}
@@ -112,7 +119,9 @@ func estimated_cost2(node *N2048, proplem *P2048) int {
 		last_num := int(math.Pow(2, float64(last_level)))
 		column := 0
 		cur := 0
-		//search for triangles
+		/* if you have redundant merges in all directions
+		add score to this node */
+
 		for j := 0; j < 4; j++ { //columns
 			cur = current_board[0][j]
 			for k := 1; k < 3; k++ { //rows
