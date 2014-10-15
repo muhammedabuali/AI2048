@@ -82,7 +82,7 @@ func (node *N2048) get_path() Path {
 	translation_map[START] = "START"
 	for i := node.depth; i >= 0; i-- {
 		fmt.Println(curr_node.board.display())
-		fmt.Println(curr_node.get_path_cost())
+		fmt.Println(translation_map[curr_node.operator])
 		path[i] = translation_map[curr_node.operator]
 		curr_node = curr_node.parent
 	}
