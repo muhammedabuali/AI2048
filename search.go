@@ -1,6 +1,7 @@
 package main
 
 import (
+	//"fmt"
 	"math"
 )
 
@@ -14,12 +15,12 @@ func general_search(p Problem, quing_fun Strategy) (Node, bool, uint64) {
 		} else {
 			// Remove first node
 			node := nodes[0]
-			nodes = nodes[1:]
 			if p.goal_test(node) {
 				return node, true, expanded_nodes
 			} else {
 				expanded_nodes++
-				nodes = quing_fun(nodes, p.expand(node))
+				nodes = quing_fun(&nodes, p.expand(node))
+				nodes = nodes[:len(nodes)-1]
 			}
 		}
 	}
