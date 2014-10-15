@@ -33,7 +33,7 @@ type Problem interface {
 	expand(n Node) []Node
 }
 
-type Strategy func(nodes []Node, children []Node) []Node
+type Strategy func(nodes *[]Node, children []Node) []Node
 
 type Heuristic func(Node) int
 
@@ -43,4 +43,5 @@ type Stack interface {
 	push(int)
 	empty() bool
 	full() bool
+	display()
 }

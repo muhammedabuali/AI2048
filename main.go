@@ -18,13 +18,14 @@ const (
 func main() {
 	// Generate grid
 	grid := GenGrid()
-	goal_path, path_cost, nodes_expanded := Search(&grid, 8, BF, true)
+	goal_path, path_cost, nodes_expanded := Search(&grid, 128, GR1, true)
 	fmt.Printf("Path: %v\nCost: %v\nTotal Nodes Expanded in search: %v\n",
 		goal_path, path_cost, nodes_expanded)
 }
 
 func Search(grid *Grid, M int, strategy int, visualize bool) (p Path, cost int, nodes uint64) {
 	problem := P2048{M, grid}
+	global_problem = &problem
 	var (
 		target         Node
 		success        bool
@@ -64,19 +65,20 @@ func get_quing_func(symbol int) Strategy {
 	case DF:
 		return enqueue_at_front
 	case GR1:
-		return greedy_enqueue(greedy_heuristic_1)
+		return best_fit_enqueue(greedy_heuristic_1)
 	case GR2:
-		return greedy_enqueue(greedy_heuristic_2)
+		return best_fit_enqueue(greedy_heuristic_2)
 	case AS1:
-		return a_star_enqueue(astar_heuristic_1)
+		return best_fit_enqueue(astar_heuristic_1)
 	default:
 		// AS2
-		return a_star_enqueue(astar_heuristic_2)
+		return best_fit_enqueue(astar_heuristic_2)
 	}
 }
 
 func GenGrid() Grid {
-	grid := Grid{}
+	var grid Grid = Grid(0)
+	gobal_hash = make(map[Grid]bool)
 	//rand.Seed(time.Now().UTC().Unix())
 	rand.Seed(42)
 	r1, c1, r2, c2 := rand.Intn(4), rand.Intn(4), rand.Intn(4), rand.Intn(4)
@@ -84,7 +86,7 @@ func GenGrid() Grid {
 	for (r1 == r2) && (c2 == c1) {
 		c1 = rand.Intn(4)
 	}
-	grid[r1][c1] = 2
-	grid[r2][c2] = 2
+	grid = grid.grid_ins(r1, c1, 2)
+	grid = grid.grid_ins(r2, c2, 2)
 	return grid
 }

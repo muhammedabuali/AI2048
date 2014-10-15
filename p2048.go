@@ -5,11 +5,13 @@ type P2048 struct {
 	grid *Grid
 }
 
+var global_problem Problem
+
 // Returns the initial state of the board
 // As in the Root node of the search tree.
 // seed is the seed used by the PRNG.
 func (p *P2048) initial_state() Node {
-	return &N2048{*p.grid, 2, nil, START, 0, 0}
+	return &N2048{*p.grid, 2, nil, START, 0, 0, 0, false}
 }
 
 // Returns true if we have reached M.
@@ -22,16 +24,32 @@ func (*P2048) expand(node Node) []Node {
 	nodes := make([]Node, 0, 4)
 	// Apply all possible operators
 	if node.can_apply(LEFT) {
-		nodes = append(nodes, node.apply(LEFT))
+		new_node := node.apply(LEFT)
+		if !gobal_hash[(new_node.(*N2048)).board] {
+			nodes = append(nodes, new_node)
+			gobal_hash[(new_node.(*N2048)).board] = true
+		}
 	}
 	if node.can_apply(RIGHT) {
-		nodes = append(nodes, node.apply(RIGHT))
+		new_node := node.apply(RIGHT)
+		if !gobal_hash[(new_node.(*N2048)).board] {
+			nodes = append(nodes, new_node)
+			gobal_hash[(new_node.(*N2048)).board] = true
+		}
 	}
 	if node.can_apply(DOWN) {
-		nodes = append(nodes, node.apply(DOWN))
+		new_node := node.apply(DOWN)
+		if !gobal_hash[(new_node.(*N2048)).board] {
+			nodes = append(nodes, new_node)
+			gobal_hash[(new_node.(*N2048)).board] = true
+		}
 	}
 	if node.can_apply(UP) {
-		nodes = append(nodes, node.apply(UP))
+		new_node := node.apply(UP)
+		if !gobal_hash[(new_node.(*N2048)).board] {
+			nodes = append(nodes, new_node)
+			gobal_hash[(new_node.(*N2048)).board] = true
+		}
 	}
 
 	return nodes

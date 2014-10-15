@@ -1,5 +1,9 @@
 package main
 
+import (
+	"fmt"
+)
+
 type StackImpl struct {
 	data []int
 	top  int
@@ -31,6 +35,11 @@ func (this *StackImpl) push(value int) {
 
 func (this *StackImpl) pop() int {
 	top := this.peak()
+	this.data[this.top] = 0
 	this.top--
 	return top
+}
+
+func (this *StackImpl) display() {
+	fmt.Println(this.data)
 }
