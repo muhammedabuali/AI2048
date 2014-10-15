@@ -6,7 +6,7 @@ import (
 )
 
 func greedy_heuristic_1(n Node) int {
-	return 1
+	return estimated_cost(n.(*N2048), global_problem.(*P2048))
 }
 
 func greedy_heuristic_2(n Node) int {
@@ -59,7 +59,5 @@ func estimated_cost(node *N2048, proplem *P2048) int {
 	estimated := total_cost - current_cost
 	node.score = estimated
 	node.score_flag = true
-	//fmt.Println("hello")
-	//fmt.Println("node", node.board.display(), "total cost", total_cost, "current_cost", current_cost)
 	return int(estimated)
 }

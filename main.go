@@ -18,10 +18,9 @@ const (
 func main() {
 	// Generate grid
 	grid := GenGrid()
-	goal_path, path_cost, nodes_expanded := Search(&grid, 128, AS1, true)
+	goal_path, path_cost, nodes_expanded := Search(&grid, 128, GR1, true)
 	fmt.Printf("Path: %v\nCost: %v\nTotal Nodes Expanded in search: %v\n",
 		goal_path, path_cost, nodes_expanded)
-	fmt.Println(len(gobal_hash))
 }
 
 func Search(grid *Grid, M int, strategy int, visualize bool) (p Path, cost int, nodes uint64) {
@@ -66,14 +65,14 @@ func get_quing_func(symbol int) Strategy {
 	case DF:
 		return enqueue_at_front
 	case GR1:
-		return greedy_enqueue(greedy_heuristic_1)
+		return best_fit_enqueue(greedy_heuristic_1)
 	case GR2:
-		return greedy_enqueue(greedy_heuristic_2)
+		return best_fit_enqueue(greedy_heuristic_2)
 	case AS1:
-		return a_star_enqueue(astar_heuristic_1)
+		return best_fit_enqueue(astar_heuristic_1)
 	default:
 		// AS2
-		return a_star_enqueue(astar_heuristic_2)
+		return best_fit_enqueue(astar_heuristic_2)
 	}
 }
 

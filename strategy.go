@@ -34,7 +34,7 @@ func greedy_enqueue(h Heuristic) Strategy {
 	}
 }
 
-func a_star_enqueue(h Heuristic) Strategy {
+func best_fit_enqueue(h Heuristic) Strategy {
 	return func(nodes *[]Node, children []Node) []Node {
 		heap_down(nodes, h)
 		for i := 0; i < len(children); i++ {
