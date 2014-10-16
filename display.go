@@ -34,7 +34,6 @@ func display(plan string) {
 		}()
 		var fileName string
 		if r.URL.Path == "/" {
-			//file_response("2048/index.html", w, r)
 			fileName = "2048/index.html"
 		} else {
 			fileName = "2048/" + r.URL.Path[1:]

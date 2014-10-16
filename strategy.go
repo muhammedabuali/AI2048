@@ -1,9 +1,5 @@
 package main
 
-import (
-	"sort"
-)
-
 func enqueue_at_end(nodes *[]Node, children []Node) []Node {
 	*nodes = (*nodes)[1:]
 	return append(*nodes, children...)
@@ -25,30 +21,12 @@ func depth_limited_search(limit uint64) Strategy {
 	}
 }
 
-func greedy_enqueue(h Heuristic) Strategy {
-	return func(nodes *[]Node, children []Node) []Node {
-		combined := append(*nodes, children...)
-		sort.Sort(ByEval{combined, h})
-		return combined
-	}
-}
-
 func best_fit_enqueue(h Heuristic) Strategy {
 	return func(nodes *[]Node, children []Node) []Node {
 		heap_down(nodes, h)
 		for i := 0; i < len(children); i++ {
 			heap_up(nodes, children[i], h)
 		}
-		/*fmt.Println("before sorting", len(combined))
-		fmt.Println(combined)
-		for i := 0; i < len(combined); i++ {
-			fmt.Println(eval(combined[i]), (combined[i].(*N2048)).board.display())
-			fmt.Println(h(combined[i]))
-		}
-		fmt.Println()*/
-		/*fmt.Println("after sorting")
-		fmt.Println(combined)
-		fmt.Println(eval(combined[0]))*/
 		return *nodes
 	}
 }

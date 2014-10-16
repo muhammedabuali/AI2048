@@ -5,10 +5,16 @@ import (
 	"math"
 )
 
+// Grid is an unsigned 64 bit integer which represents
+// a packed grid.
+// Where each 4 bits represents a power of two, they corrospond to a cell element
+// in row major ordering.
 type Grid uint64
 
 var gobal_hash map[Grid]bool
 
+// grid_ins inserts in the grid,
+// val must be a power of two.
 func (grid Grid) grid_ins(row, col, val int) Grid {
 	x := row*16 + col*4
 	pow := math.Log2(float64(val))
@@ -18,6 +24,7 @@ func (grid Grid) grid_ins(row, col, val int) Grid {
 	return grid
 }
 
+// grid_access returns the element at row and col
 func (grid Grid) grid_access(row, col int) int {
 	var x float64 = float64(row*16 + col*4)
 	var sum float64 = 0
