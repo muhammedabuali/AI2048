@@ -291,9 +291,10 @@ func depth_limited_search(limit uint64) Strategy {
             return append(children, *nodes...)
         }
     }
-}
-It is exactly the same as \verb+ enqueue_at_front+
+} 
 \end{lstlisting}
+It is exactly the same as \verb+ enqueue_at_front+ with the exception that any node
+having a depth greater than \verb+ limit+ is discarded.
 \section{Greedy Search}
 \section{A* Search}
 
