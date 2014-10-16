@@ -12,7 +12,7 @@ func general_search(p Problem, quing_fun Strategy) (Node, bool, uint64) {
 		if len(nodes) == 0 {
 			return nil, false, expanded_nodes
 		} else {
-			// Remove first node
+			// Select first node
 			node := nodes[0]
 			if p.goal_test(node) {
 				return node, true, expanded_nodes
