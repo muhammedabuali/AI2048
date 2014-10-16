@@ -8,8 +8,34 @@
 
 \usepackage[hidelinks]{hyperref}
 \usepackage{color}
+\usepackage{textcomp}
+\usepackage{listings}
 \hypersetup{
     linktoc=all     
+}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+\lstset{frame=single,
+    language=go,
+    aboveskip=3mm,
+    belowskip=3mm,
+    showstringspaces=false,
+    columns=flexible,
+    basicstyle={\small\ttfamily},
+    numbers=none,
+    keywordstyle=\color{blue},
+    commentstyle=\color{dkgreen},
+    stringstyle=\color{mauve},
+    breaklines=true,
+    upquote=true,
+    breakatwhitespace=true
+    tabsize=4,
+    morekeywords={bool},
+    rulecolor=\color{black}, 
+    identifierstyle=\color{black}
 }
 
 \begin{document}
@@ -22,6 +48,7 @@
 
 \renewcommand{\abstractname}{Brief}
 \begin{abstract}
+
 \end{abstract}
 
 \tableofcontents
@@ -29,18 +56,211 @@
 \part{Models}
 
 \section{Search-tree node}
+A single node in a search tree represents a game state. It stores the state's 
+grid, maximum value, parent node, operator applied, accumalitive cost, depth and
+heuristic value. 
+
+
+
+\subsection{Node interface}
+The node interface represents the abstract search tree node it is declared
+in \begin{verbatim}types.go\end{verbatim}
+\begin{lstlisting}
+type Node interface {
+    get_parent() Node
+    // Returns the operator used to reach this node
+    get_operator() int
+    // Returns path depth with root having a depth of 0
+    get_depth() int
+    // Returns the path cost, which represents the score
+    get_path_cost() interface
+    // Returns the path from root to this node (series of actions)
+    get_path() Path
+    // Returns true if it's possible to apply operator on this node
+    can_apply(operator int) bool
+    // Applies operator and returns the resulting node
+    apply(operator int) Node
+}
+\end{lstlisting}
+
+\subsection{N2048 struct}
+The struct N2048 represents the search-tree node, it is declared in 
+\begin{verbatim}n2048.go\end{verbatim} it implements the Node interface 
+\begin{lstlisting}
+type N2048 struct {
+    board      Grid   // The grid
+    max        int    // maximum value in board
+    parent     *N2048 // nil if root
+    operator   int    // operator applied on parent to reach this node
+    path_cost  int    // cost from initial state to here
+    depth      int    // distance from initial state
+    score      int    // heuristic score
+    score_flag bool   //score flag is set
+}
+\end{lstlisting}
+\vfill
+
 
 \section{Search problem}
+An abstract problem should be able to do three things
+\begin{itemize}
+\item Provide the initial state; root of search tree
+\item Be able to tell if a search tree node satisfies the goal constraints
+\item Expand a node; get it's children
+\end{itemize}
+We use the Problem interface to model an abstract problem
+
+\subsection{Problem interface}
+The Problem interface is declared in \verb+ types.go+ 
+\begin{lstlisting}
+type Problem interface {
+    initial_state() Node
+    goal_test(n Node) bool
+    expand(n Node) []Node
+}
+\end{lstlisting}
+\subsection{P2048 struct}
+The 2048 problem is represented by the P2048 struct, which implements the Problem interface.
+The P2048 struct is declared and implemented in \verb+ p2048.go+
+\begin{lstlisting}
+type P2048 struct {
+    goal int
+    grid *Grid
+}
+\end{lstlisting}
+\vfill
 
 \section{2048 problem}
-
+    
 \part{Main Functions}
+\section{GenGrid}
+The function \verb+ GenGrid+ generates a \verb+ 4x4+ grid, with two '2' tiles placed randomly.
+It is defined in the \verb+ main.go+ file. It is implemented as required by the project description.
+\begin{lstlisting}
+func GenGrid() Grid {
+    var grid Grid = Grid(0)
+    gobal_hash = make(map[Grid]bool)
+    rand.Seed(time.Now().UTC().Unix())
+    rand.Seed(42)
+    r1, c1, r2, c2 := rand.Intn(4), rand.Intn(4), rand.Intn(4), rand.Intn(4)
+
+    for (r1 == r2) && (c2 == c1) {
+        c1 = rand.Intn(4)
+    }
+    grid = grid.grid_ins(r1, c1, 2)
+    grid = grid.grid_ins(r2, c2, 2)
+    return grid
+}
+\end{lstlisting}
+\section{Search}
+As per the project description the function \verb+ Search+ uses a search strategy to 
+formulate a plan. It is defined in the \verb+ main.go+ file.
+\begin{lstlisting}
+func Search(grid Grid, M int, strategy int, visualize bool) (p Path, cost int, nodes uint64) {
+    problem := P2048{M, grid}
+    global_problem = &problem
+    var (
+        target         Node
+        success        bool
+        nodes_expanded uint64
+        goal_path      Path
+        path_cost      int
+    )
+    if strategy == ID {
+        target, success, nodes_expanded = iterative_deepening_search(&problem)
+
+    } else {
+        quing_func := get_quing_func(strategy)
+        target, success, nodes_expanded = general_search(&problem, quing_func)
+    }
+
+    if success {
+        // reached goal state
+        goal_path, path_cost = target.get_path(), target.get_path_cost()
+
+    } else {
+        // Failed to reach goal state
+        goal_path, path_cost = Path{}, 0
+    }
+
+    if visualize {
+        display(goal_path.encode())
+    }
+
+    return goal_path, path_cost, nodes_expanded
+}
+\end{lstlisting}
+
+The strategy parameter is one of the following constants.
+\begin{enumerate}
+\item BF
+\item DF
+\item ID
+\item GR1
+\item GR2
+\item AS1
+\item AS2
+\end{enumerate}
+Which forces search to use the selected strategy as per the project description.
 \section{General Search}
+The general search function is implemented in \verb+ search.go+
+\begin{lstlisting}
+func general_search(p Problem, quing_fun Strategy) (Node, bool, uint64) {
+    nodes := make([]Node, 0, 10)             // Make a queue
+    nodes = append(nodes, p.initial_state()) // queue initial state
+    expanded_nodes := uint64(0)
+    for {
+        if len(nodes) == 0 {
+            return nil, false, expanded_nodes
+        } else {
+            // Remove first node
+            node := nodes[0]
+            if p.goal_test(node) {
+                return node, true, expanded_nodes
+            } else {
+                expanded_nodes++
+                nodes = quing_fun(&nodes, p.expand(node))
+                nodes = nodes[:len(nodes)-1]
+            }
+        }
+    }
+}
+\end{lstlisting}
+It returns a three tupe containing
+\begin{enumerate}
+\item The goal node or nil if not found
+\item A boolean indicating success
+\item The number of nodes expanded
+\end{enumerate}
+\section{Iterative Deepening Search}
+Iterative deepining uses the general search function with a quing function that discards
+nodes beyond a certain depth. It is implemented in \verb+ main.go +
+\begin{lstlisting}
+func iterative_deepening_search(p Problem) (Node, bool, uint64) {
+
+    total_expanded_nodes := uint64(0)
+    for limit := uint64(0); limit < math.MaxUint64; limit++ {
+        quing_fun := depth_limited_search(limit)
+        target, success, expanded_nodes := general_search(p, quing_fun)
+        total_expanded_nodes += expanded_nodes
+        if success {
+            return target, success, total_expanded_nodes
+        }
+
+    }
+
+    return nil, false, total_expanded_nodes
+}
+\end{lstlisting}
+
+It returns the same tuple as the general search function.
+
+
 
 \part{Search Algorithms}
 \section{Breadth First Search}
 \section{Depth First Search}
-\section{Iterative }
+\section{Iterative Deepening Search}
 \section{Greedy Search}
 \section{A* Search}
 
