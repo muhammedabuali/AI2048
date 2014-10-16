@@ -2,7 +2,7 @@ package main
 
 type P2048 struct {
 	goal int
-	grid *Grid
+	grid Grid // initial from which we create the initial state
 }
 
 var global_problem Problem
@@ -11,7 +11,7 @@ var global_problem Problem
 // As in the Root node of the search tree.
 // seed is the seed used by the PRNG.
 func (p *P2048) initial_state() Node {
-	return &N2048{*p.grid, 2, nil, START, 0, 0, 0, false}
+	return &N2048{p.grid, 2, nil, START, 0, 0, 0, false}
 }
 
 // Returns true if we have reached M.

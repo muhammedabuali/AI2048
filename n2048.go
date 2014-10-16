@@ -73,19 +73,12 @@ func (node *N2048) get_depth() int {
 func (node *N2048) get_path() Path {
 
 	path := make(Path, node.depth+1)
-	curr_node := node
 	translation_map := make(map[int]string)
 	translation_map[LEFT] = "left"
 	translation_map[RIGHT] = "right"
 	translation_map[UP] = "up"
 	translation_map[DOWN] = "down"
 	translation_map[START] = "START"
-	for i := node.depth; i >= 0; i-- {
-		fmt.Println(curr_node.board.display())
-		fmt.Println(translation_map[curr_node.operator])
-		path[i] = translation_map[curr_node.operator]
-		curr_node = curr_node.parent
-	}
 	return path
 }
 

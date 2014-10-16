@@ -18,13 +18,21 @@ const (
 func main() {
 	// Generate grid
 	grid := GenGrid()
-	goal_path, path_cost, nodes_expanded := Search(&grid, 256, AS1, true)
+	goal_path, path_cost, nodes_expanded := Search(grid, 4, AS2, true)
 	fmt.Printf("Path: %v\nCost: %v\nTotal Nodes Expanded in search: %v\n",
 		goal_path, path_cost, nodes_expanded)
 }
 
-func Search(grid *Grid, M int, strategy int, visualize bool) (p Path, cost int, nodes uint64) {
-	problem := P2048{M, grid}
+/*
+ * Uses a search strategy to formulate a plan to the goal
+ * grid - Initial grid to use
+ * M - Power of two that we are trying to reach
+ * strategy - one of {BF, DF, ID, GR1, GR2, AS1, AS2} representing the search strategy
+ * visualize - true if you want a visual representation
+ * return 3-tuple (Path, cost, number of nodes expanded)
+ */
+func Search(grid Grid, M uint, strategy int, visualize bool) (Path, int, uint64) {
+	problem := P2048{1 << M, grid}
 	global_problem = &problem
 	var (
 		target         Node
@@ -51,7 +59,7 @@ func Search(grid *Grid, M int, strategy int, visualize bool) (p Path, cost int, 
 	}
 
 	if visualize {
-		//TODO : Implement
+		display(goal_path.encode())
 	}
 
 	return goal_path, path_cost, nodes_expanded
@@ -82,7 +90,6 @@ func GenGrid() Grid {
 	//rand.Seed(time.Now().UTC().Unix())
 	rand.Seed(42)
 	r1, c1, r2, c2 := rand.Intn(4), rand.Intn(4), rand.Intn(4), rand.Intn(4)
-
 	for (r1 == r2) && (c2 == c1) {
 		c1 = rand.Intn(4)
 	}
