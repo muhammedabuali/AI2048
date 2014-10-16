@@ -10,6 +10,7 @@
 \usepackage{color}
 \usepackage{textcomp}
 \usepackage{listings}
+\usepackage{appendix}
 \hypersetup{
     linktoc=all     
 }
@@ -47,6 +48,16 @@
 
 \renewcommand{\abstractname}{Brief}
 \begin{abstract}
+This paper explores a solution to a variant of the famous 2048 game, where new tiles
+appear at the corners only instead of a random free tile. Our goal is to formulate a plan
+where we reach our goal, a certain power of two \emph{M} between where $1 <= M >=2$. 
+Furthermore we associate optimality with minimal score. Thus the optimal path to reach a goal
+\emph{M} is the one with the lowest score.
+
+We describe a general search problem that can represent any problem along with a general search algorithm that solves the problem using different search techniques.
+
+We will explore different informed and uniformed search strategies. We describe an implementation of each strategy using Google's Golang. We compare their performance and limitations.
+
 
 \end{abstract}
 
@@ -296,13 +307,49 @@ func depth_limited_search(limit uint64) Strategy {
 It is exactly the same as \verb+ enqueue_at_front+ with the exception that any node
 having a depth greater than \verb+ limit+ is discarded.
 \section{Greedy Search}
-\section{A* Search}
+When greedy search is selected by the Search function, the general search function is called
+with the queuing function returned by \verb+best_fit_enqueue+ which can be found in 
+\verb+strategy.go+. \verb+best_fit_enqueue+ returns a queuing function that uses a heap for node 
+storage and a heuristic function to generate the key.
+\begin{lstlisting}
+func best_fit_enqueue(h Heuristic) Strategy {
+    return func(nodes *[]Node, children []Node) []Node {
+        heap_down(nodes, h)
+        for i := 0; i < len(children); i++ {
+            heap_up(nodes, children[i], h)
+        }
+        return *nodes
+    }
+}
+\end{lstlisting}
 
+Where $Heuristic \in \{h1, h2\}$ 
+
+\section{A* Search}
+\emph{A*} search works the same way as \emph{Greedy} search, the only difference is that
+$Heuristic \in \{h3, h4\}$ which include \emph{g(n)} so technicly \emph{h3} and \emph{h4} are 
+\emph{f(n)}s not \emph{h(n)}s 
 \part{Heuristics}
 \section{h1}
 \section{h2}
 \section{h3}
 \section{h4}
+
+
+\appendix
+\appendixpage
+\addappheadtotoc
+\section{Setting up Go enviroment}
+The project is implemented using \emph{Go} \verb+1.3.1+. \emph{Go} is a cross platform 
+language created by \emph{Google}. You can install \emph{Go} and setup it's enviroment
+by following the instructions on \url{https://golang.org/doc/install}.
+\section{Dependecies}
+First you will need to install the \verb+assert+ package to your \verb+gopath+.
+and the \verb+open+ package.
+\begin{lstlisting}[language=bash]
+go get "github.com/stretchr/testify/assert"
+go get "github.com/skratchdot/open-golang/open"
+\end{lstlisting}
 
 
 \end{document}
