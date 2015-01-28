@@ -2,6 +2,7 @@
 *.o
 *.a
 *.so
+AI2048
 
 # Folders
 _obj
@@ -22,3 +23,6 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+# sublime workspace
+2048.sublime-workspace
